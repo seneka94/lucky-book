@@ -1,4 +1,5 @@
 import os
+import re
 import random
 
 from cs50 import SQL
@@ -24,11 +25,12 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-#db = SQL("sqlite:///books.db")
-uri = os.getenv("DATABASE_URL")
-if uri.startswith("postgres://ghdlpohyuegfko:7f8e0bde9958c47cb8e15ede77e4bba0982d11ca8dea7a2e7b602dc7d350c488@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d2utgghph6qu86"):
-    uri = uri.replace("postgres://ghdlpohyuegfko:7f8e0bde9958c47cb8e15ede77e4bba0982d11ca8dea7a2e7b602dc7d350c488@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d2utgghph6qu86", "postgresql://ghdlpohyuegfko:7f8e0bde9958c47cb8e15ede77e4bba0982d11ca8dea7a2e7b602dc7d350c488@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d2utgghph6qu86")
-db = SQL(uri)
+db = SQL("sqlite:///books.db")
+#db = SQL("postgresql://ghdlpohyuegfko:7f8e0bde9958c47cb8e15ede77e4bba0982d11ca8dea7a2e7b602dc7d350c488@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d2utgghph6qu86")
+#uri = os.getenv("postgres://ghdlpohyuegfko:7f8e0bde9958c47cb8e15ede77e4bba0982d11ca8dea7a2e7b602dc7d350c488@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d2utgghph6qu86")
+#if uri.startswith("postgres://ghdlpohyuegfko:7f8e0bde9958c47cb8e15ede77e4bba0982d11ca8dea7a2e7b602dc7d350c488@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d2utgghph6qu86"):
+#    uri = uri.replace("postgres://ghdlpohyuegfko:7f8e0bde9958c47cb8e15ede77e4bba0982d11ca8dea7a2e7b602dc7d350c488@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d2utgghph6qu86", "postgresql://ghdlpohyuegfko:7f8e0bde9958c47cb8e15ede77e4bba0982d11ca8dea7a2e7b602dc7d350c488@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d2utgghph6qu86")
+#db = SQL(uri)
 
 # Make sure API key is set
 if not os.environ.get("API_KEY"):
