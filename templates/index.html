@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-<main class="container py-5 text-center">
+<main>
 
             <div>
                 <h3>Не знаєш яку наступну книжку прочитати?</h3>
@@ -28,29 +28,29 @@
                 <h3>{{ UkrLit[0]["title"] }}</h3>
                 <h3>{{ UkrLit[0]["author"] }}</h3>
                 <h3>{{ UkrLit[0]["rating"]}}</h3>
-                <h3>{{ UkrLit[0]["ratings"] }}</h3>
+                <!-- <h3>{{ UkrLit[0]["ratings"] }}</h3>  -->
                 <h3><a href="{{ UkrLit[0]["link"] }}">більше про книгу на goodreads</a></h3>
             {% endfor %}
             {% for row in classic %}
                 <h3>{{ classic[0]["title"] }}</h3>
-                <h3>{{ classic[0]["language"] }}</h3>
-                <h3>{{ classic[0]["author"]}}</h3>
-                <h3>{{ classic[0]["avg_rating"] }}</h3>
+                <h3>{{ classic[0]["author"] }}</h3>
+                <h3>{{ classic[0]["rating"]}}</h3>
+                <!-- <h3>{{ classic[0]["ratings"] }}</h3>  -->
                 <h3>більше про книгу на goodreads</h3>
             {% endfor %}
             {% for row in new %}
                 <h3>{{ new[0]["title"] }}</h3>
                 <h3>{{ new[0]["author"] }}</h3>
-                <h3>{{ new[0]["lang"]}}</h3>
-                <h3>{{ new[0]["rate"] }}</h3>
-                <h3>більше про книгу на goodreads</h3>
+                <h3>{{ new[0]["rating"]}}</h3>
+                <!-- <h3>{{ new[0]["ratings"] }}</h3>  -->
+                <h3><a href="{{ new[0]["link"] }}">більше про книгу на goodreads</a></h3>
             {% endfor %}
             {% for row in biographi %}
                 <h3>{{ biographi[0]["title"] }}</h3>
                 <h3>{{ biographi[0]["author"] }}</h3>
                 <h3>{{ biographi[0]["rating"]}}</h3>
-                <h3>{{ biographi[0]["score"] }}</h3>
-                <h3>більше про книгу на goodreads</h3>
+                <!-- <h3>{{ biographi[0]["score"] }}</h3> -->
+                <h3><h3><a href="{{ biographi[0]["link"] }}">більше про книгу на goodreads</a></h3></h3>
             {% endfor %}
 
         <footer style = "position:relative; top:200px;">
