@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+        <script>
+          var books = [
+              '"In Search of Lost Time" by Marcel Proust',
+              '"Ulysses" by James Joyce',
+              '"Don Quixote" by Miguel de Cervantes',
+              '"One Hundred Years of Solitude" by Gabriel Garcia Marquez',
+              '"The Great Gatsby" by F. Scott Fitzgerald'
+          ];
+          var movies = [
+              '"Титанік"',
+              '"Джокер"',
+              '"Кармеліта"',
+              '"Готель Гранд-Будапешт"',
+              '"КРАЩЕ ЙДИ ПОВЧИ ШОСЬ"',
+              '"Вісім з половиною"'
+          ];
+          function a() {
+            var randomBook = books[Math.floor(Math.random()*books.length)];
+              document.getElementById("answer").innerHTML = randomBook;
+
+              }
+          function b() {
+            var randomMovie = movies[Math.floor(Math.random()*movies.length)];
+              document.getElementById("answer").innerHTML = randomMovie;
+              }
+          </script>
+    </head>
+
+    <body>
+        <header style="background-size: cover">
+            <div class="container1">
+                <img src="bg.jpg" alt="bg" width="1345" height="200">
+                <h1 class="centered" style="color: black">leisure generator</h1>
+            </div>
+              <div class="container1" style="bottom:-16px">
+                <a href="index">Home</a>
+                <a href="books">Books</a>
+                <a href="movies">Movies</a>
+                <a href="articles">Articles</a>
+                <a href="#search" class="w3-bar-item w3-button">Search</a>
+              </div>
+            </header>
+      <div class="container1" style="bottom:-32px">
+        <hr>
+          <div style="color: green">
+            <h3>Не знаєш який фільм вибрати на вечір?</h3>
+            <h3>Чи яку наступну книжку прочитати?</h3>
+            <h5>Довірся сигналу з космосу: натискай на кнопку</h5>
+          </div>
+      </div>
+
+        <div class="container" style = "position:relative; top:100px;">
+
+          <div class="row">
+            <div class="col">
+              <div class="text-center">
+                <img src="books.jpg" alt="i1" width="100" height="100">
+                <p><button id="1" type="button" class="btn btn-warning" onclick="a()">Шо би то почитати?</button></p>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="text-center">
+                <img src="movie.jpg" alt="i2" width="100" height="100">
+                <p><button id="2" type="button" class="btn btn-warning" onclick="b()">Шо би то подивитись?</button></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="text-center">
+              <h3 id="answer"></h3>
+            </div>
+          </div>
+          </div>
+
+        <footer style = "position:relative; top:200px;">
+            <h3>Footer</h3>
+            <p>Remember to check <a href="https://seneka94.github.io/trivia/">test</a></p>
+        </footer>
+    </body>
+</html>
+{% endblock %}

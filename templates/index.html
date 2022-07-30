@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<main class="container py-5 text-center">
+
+            <div>
+                <h3>Не знаєш яку наступну книжку прочитати?</h3>
+                <h5>Довірся сигналу з космосу і можливо твоя книга тебе знайде</h5>
+            </div>
+            <form  method="post">
+                <p><button id="ua" name="ua" value="ua" class="btn btn-primary" type="submit">УкрЛіт</button></p>
+            </form>
+            <form  method="post">
+                <p><button id="ua" name="ua" value="classic" class="btn btn-primary" type="submit">classic</button></p>
+            </form>
+            <form  method="post">
+                <p><button id="ua" name="ua" value="new" class="btn btn-primary" type="submit">top from 21th</button></p>
+            </form>
+            <form  method="post">
+                <p><button id="ua" name="ua" value="biographi" class="btn btn-primary" type="submit">biographi</button></p>
+            </form>
+
+            {% for row in UkrLit %}
+                <h3>{{ UkrLit[0]["title"] }}</h3>
+                <h3>{{ UkrLit[0]["author"] }}</h3>
+                <h3>{{ UkrLit[0]["rating"]}}</h3>
+                <h3>{{ UkrLit[0]["ratings"] }}</h3>
+                <h3><a href="{{ UkrLit[0]["link"] }}">більше про книгу на goodreads</a></h3>
+            {% endfor %}
+            {% for row in classic %}
+                <h3>{{ classic[0]["title"] }}</h3>
+                <h3>{{ classic[0]["language"] }}</h3>
+                <h3>{{ classic[0]["author"]}}</h3>
+                <h3>{{ classic[0]["avg_rating"] }}</h3>
+                <h3>більше про книгу на goodreads</h3>
+            {% endfor %}
+            {% for row in new %}
+                <h3>{{ new[0]["title"] }}</h3>
+                <h3>{{ new[0]["author"] }}</h3>
+                <h3>{{ new[0]["lang"]}}</h3>
+                <h3>{{ new[0]["rate"] }}</h3>
+                <h3>більше про книгу на goodreads</h3>
+            {% endfor %}
+            {% for row in biographi %}
+                <h3>{{ biographi[0]["title"] }}</h3>
+                <h3>{{ biographi[0]["author"] }}</h3>
+                <h3>{{ biographi[0]["rating"]}}</h3>
+                <h3>{{ biographi[0]["score"] }}</h3>
+                <h3>більше про книгу на goodreads</h3>
+            {% endfor %}
+
+        <footer style = "position:relative; top:200px;">
+            <h3>Footer</h3>
+            <p>Remember to check <a href="https://seneka94.github.io/trivia/">test</a></p>
+        </footer>
+
+</main>
+{% endblock %}
