@@ -7,51 +7,129 @@
 {% block main %}
 <main>
 
-            <div>
+            <div class="p-3">
                 <h3>Не знаєш яку наступну книжку прочитати?</h3>
                 <h5>Довірся сигналу з космосу і можливо твоя книга тебе знайде</h5>
             </div>
-            <form  method="post">
-                <p><button id="ua" name="ua" value="ua" class="btn btn-primary" type="submit">УкрЛіт</button></p>
-            </form>
-            <form  method="post">
-                <p><button id="ua" name="ua" value="classic" class="btn btn-primary" type="submit">classic</button></p>
-            </form>
-            <form  method="post">
-                <p><button id="ua" name="ua" value="new" class="btn btn-primary" type="submit">top from 21th</button></p>
-            </form>
-            <form  method="post">
-                <p><button id="ua" name="ua" value="biographi" class="btn btn-primary" type="submit">biographi</button></p>
-            </form>
+            <div class="container text-center">
+                <div class="row g-2">
+                  <div class="col-6">
+                    <div class="p-3">
+                        <div class='container'>
+                            <form method="post">
 
-            {% for row in UkrLit %}
-                <h3>{{ UkrLit[0]["title"] }}</h3>
-                <h3>{{ UkrLit[0]["author"] }}</h3>
-                <h3>{{ UkrLit[0]["rating"]}}</h3>
-                <!-- <h3>{{ UkrLit[0]["ratings"] }}</h3>  -->
-                <h3><a href="{{ UkrLit[0]["link"] }}">більше про книгу на goodreads</a></h3>
-            {% endfor %}
-            {% for row in classic %}
-                <h3>{{ classic[0]["title"] }}</h3>
-                <h3>{{ classic[0]["author"] }}</h3>
-                <h3>{{ classic[0]["rating"]}}</h3>
-                <!-- <h3>{{ classic[0]["ratings"] }}</h3>  -->
-                <h3>більше про книгу на goodreads</h3>
-            {% endfor %}
-            {% for row in new %}
-                <h3>{{ new[0]["title"] }}</h3>
-                <h3>{{ new[0]["author"] }}</h3>
-                <h3>{{ new[0]["rating"]}}</h3>
-                <!-- <h3>{{ new[0]["ratings"] }}</h3>  -->
-                <h3><a href="{{ new[0]["link"] }}">більше про книгу на goodreads</a></h3>
-            {% endfor %}
-            {% for row in biographi %}
-                <h3>{{ biographi[0]["title"] }}</h3>
-                <h3>{{ biographi[0]["author"] }}</h3>
-                <h3>{{ biographi[0]["rating"]}}</h3>
-                <!-- <h3>{{ biographi[0]["score"] }}</h3> -->
-                <h3><h3><a href="{{ biographi[0]["link"] }}">більше про книгу на goodreads</a></h3></h3>
-            {% endfor %}
+                                <div class="btn-group">
+                            
+                                        <div class="dropdown-container">
+                                        <select id="categories" name="categories">
+                                            <option class="dropdown-item" value="top">ТОП світової літератури</option>
+                                            <option class="dropdown-item" value="uatop">ТОП української літератури</option>
+                                            <option class="dropdown-item" value="clas">Культова класика</option>
+                                          </select>
+                                        </div>
+                                    </button>
+                                  </div>
+
+                                <button id="ua" name="ua" value="ua" class="btn btn-dark btn-lg" type="submit"> Вибрати книгу </button>
+
+                            </form>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="p-3">
+
+                        {% for row in top %}
+                            <img  src="{{ top[0]["image"] }}">
+                            <h3>{{ top[0]["title"] }}</h3>
+                            <h5>{{ top[0]["author"] }}</h5>
+                            <h6>{{ top[0]["rating"] }}</h6>
+                            <form action="{{ top[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in uatop %}
+                            <img  src="{{ uatop[0]["image"] }}">
+                            <h3>{{ uatop[0]["title"] }}</h3>
+                            <h5>{{ uatop[0]["author"] }}</h5>
+                            <h6>{{ uatop[0]["rating"] }}</h6>
+                            <form action="{{ uatop[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in clas %}
+                            <img  src="{{ clas[0]["image"] }}">
+                            <h3>{{ clas[0]["title"] }}</h3>
+                            <h5>{{ clas[0]["author"] }}</h5>
+                            <h6>{{ clas[0]["rating"] }}</h6>
+                            <form action="{{ clas[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in UkrLit %}
+                        <p> {{ name }} </p>
+                        <img  src="{{ UkrLit[0]["image"] }}">
+                        <h3>{{ UkrLit[0]["title"] }}</h3>
+                        <h5>by {{ UkrLit[0]["author"] }}</h5>
+                        <h6>rating {{ UkrLit[0]["rating"]}}</h6>
+                        <!-- <h3>{{ UkrLit[0]["ratings"] }}</h3>  -->
+                        <form action="{{ UkrLit[0]["link"] }}" method="get" target="_blank">
+                            <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                        </form>
+                        <form  method="get">
+                            <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                        </form>
+
+                    {% endfor %}
+                    {% for row in classic %}
+                        <h3>{{ classic[0]["title"] }}</h3>
+                        <h3>{{ classic[0]["author"] }}</h3>
+                        <h3>{{ classic[0]["rating"]}}</h3>
+                        <!-- <h3>{{ classic[0]["ratings"] }}</h3>  -->
+                        <h3>більше про книгу на goodreads</h3>
+                    {% endfor %}
+                    {% for row in new %}
+                        <h3>{{ new[0]["title"] }}</h3>
+                        <h3>{{ new[0]["author"] }}</h3>
+                        <h3>{{ new[0]["rating"]}}</h3>
+                        <!-- <h3>{{ new[0]["ratings"] }}</h3>  -->
+                        <h3><a href="{{ new[0]["link"] }}">більше про книгу на goodreads</a></h3>
+                    {% endfor %}
+                    {% for row in biographi %}
+                        <h3>{{ biographi[0]["title"] }}</h3>
+                        <h3>{{ biographi[0]["author"] }}</h3>
+                        <h3>{{ biographi[0]["rating"]}}</h3>
+                        <!-- <h3>{{ biographi[0]["score"] }}</h3> -->
+                        <h3><h3><a href="{{ biographi[0]["link"] }}">більше про книгу на goodreads</a></h3></h3>
+                    {% endfor %}
+
+                    {% for row in my_list %}
+                        <h3>{{ my_list[0]["title"] }}</h3>
+                        <h3>{{ my_list[0]["author"] }}</h3>
+                        <h3></h3>
+                        <form  method="get">
+                            <p><button id="ua" name="ua" value="delete" class="btn btn-primary" type="submit">delete</button></p>
+                        </form>
+                    {% endfor %}
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
 
         <footer style = "position:relative; top:200px;">
             <h3>Footer</h3>

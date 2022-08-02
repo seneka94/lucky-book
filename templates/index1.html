@@ -1,90 +1,60 @@
-{% extends "layout.html" %}
+<form  method="post">
+  <p><button id="ua" name="ua" value="ua" class="btn btn-primary" type="submit">УкрЛіт</button></p>
+</form>
+<form  method="post">
+  <p><button id="ua" name="ua" value="classic" class="btn btn-primary" type="submit">classic</button></p>
+</form>
 
-{% block title %}
-    Log In
-{% endblock %}
+<form  method="post">
+  <p><button id="ua" name="ua" value="new" class="btn btn-primary" type="submit">21th top</button></p>
+</form>
+<form  method="post">
+  <p><button id="ua" name="ua" value="biographi" class="btn btn-primary" type="submit">biographi</button></p>
+</form>
+<form  method="post">
+  <p><button id="ua" name="ua" value="my_list" class="btn btn-primary" type="submit">мій список</button></p>
+</form>
 
-{% block main %}
-        <script>
-          var books = [
-              '"In Search of Lost Time" by Marcel Proust',
-              '"Ulysses" by James Joyce',
-              '"Don Quixote" by Miguel de Cervantes',
-              '"One Hundred Years of Solitude" by Gabriel Garcia Marquez',
-              '"The Great Gatsby" by F. Scott Fitzgerald'
-          ];
-          var movies = [
-              '"Титанік"',
-              '"Джокер"',
-              '"Кармеліта"',
-              '"Готель Гранд-Будапешт"',
-              '"КРАЩЕ ЙДИ ПОВЧИ ШОСЬ"',
-              '"Вісім з половиною"'
-          ];
-          function a() {
-            var randomBook = books[Math.floor(Math.random()*books.length)];
-              document.getElementById("answer").innerHTML = randomBook;
 
-              }
-          function b() {
-            var randomMovie = movies[Math.floor(Math.random()*movies.length)];
-              document.getElementById("answer").innerHTML = randomMovie;
-              }
-          </script>
-    </head>
 
-    <body>
-        <header style="background-size: cover">
-            <div class="container1">
-                <img src="bg.jpg" alt="bg" width="1345" height="200">
-                <h1 class="centered" style="color: black">leisure generator</h1>
-            </div>
-              <div class="container1" style="bottom:-16px">
-                <a href="index">Home</a>
-                <a href="books">Books</a>
-                <a href="movies">Movies</a>
-                <a href="articles">Articles</a>
-                <a href="#search" class="w3-bar-item w3-button">Search</a>
-              </div>
-            </header>
-      <div class="container1" style="bottom:-32px">
-        <hr>
-          <div style="color: green">
-            <h3>Не знаєш який фільм вибрати на вечір?</h3>
-            <h3>Чи яку наступну книжку прочитати?</h3>
-            <h5>Довірся сигналу з космосу: натискай на кнопку</h5>
-          </div>
-      </div>
 
-        <div class="container" style = "position:relative; top:100px;">
 
-          <div class="row">
-            <div class="col">
-              <div class="text-center">
-                <img src="books.jpg" alt="i1" width="100" height="100">
-                <p><button id="1" type="button" class="btn btn-warning" onclick="a()">Шо би то почитати?</button></p>
-              </div>
-            </div>
 
-            <div class="col">
-              <div class="text-center">
-                <img src="movie.jpg" alt="i2" width="100" height="100">
-                <p><button id="2" type="button" class="btn btn-warning" onclick="b()">Шо би то подивитись?</button></p>
-              </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="text-center">
-              <h3 id="answer"></h3>
-            </div>
-          </div>
-          </div>
 
-        <footer style = "position:relative; top:200px;">
-            <h3>Footer</h3>
-            <p>Remember to check <a href="https://seneka94.github.io/trivia/">test</a></p>
-        </footer>
-    </body>
-</html>
-{% endblock %}
+
+
+<ul class="dropdown-menu dropdown-menu-end">
+  <li><a class="dropdown-item" href="#">Всі</a></li>
+  <li><hr class="dropdown-divider"></li>
+  <li><a class="dropdown-item" href="#">ТОП світової літератури</a></li>
+  <li><a class="dropdown-item" href="#">ТОП української літератури</a></li>
+  <li><a class="dropdown-item" href="#">Культова класика</a></li>
+  <li><hr class="dropdown-divider"></li>
+  <li><a class="dropdown-item" href="#">Українська художня література</a></li>
+  <li><a class="dropdown-item" href="#">Біографії і Мемуари з України</a></li>
+  <li><a class="dropdown-item" href="#">“Nonfiction” з України і про Укаїну</a></li>
+  <li><hr class="dropdown-divider"></li>
+  <li><a class="dropdown-item" href="#">“Nonfiction” (без біографій)</a></li>
+  <li><a class="dropdown-item" href="#">Біографії і Мемуари</a></li>
+  <li><a class="dropdown-item" href="#">Історичні книги</a></li>
+  <li><a class="dropdown-item" href="#">Фентезі</a></li>
+  <li><a class="dropdown-item" href="#">Триллери і містика</a></li>
+  <li><a class="dropdown-item" href="#">Наукова фантастика</a></li>
+
+
+
+  <div class="btn-group">
+    <button id="1" name="1" value="ua" type="button" class="btn btn-ligth btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+        </svg>
+
+
+
+
+
+
+      </button>
+    </div>

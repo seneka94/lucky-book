@@ -46,23 +46,45 @@ def after_request(response):
 def index():
     """Show portfolio of stocks"""
     if request.method == "POST":
-        n = random.randint(0,78)
-        if request.form['ua'] == 'ua':
-            UkrLit = db.execute("SELECT * FROM UkrLit WHERE id == ?", n)
-            return render_template("index.html", UkrLit=UkrLit)
-        elif request.form['ua'] == 'classic':
-            classic = db.execute("SELECT * FROM class1 WHERE id == ?", n)
-            return render_template("index.html", classic=classic)
-        elif request.form['ua'] == 'new':
-            new = db.execute("SELECT * FROM new WHERE id == ?", n)
-            return render_template("index.html", new=new)
-        elif request.form['ua'] == 'biographi':
-            biographi = db.execute("SELECT * FROM biographi WHERE id == ?", n)
-            return render_template("index.html", biographi=biographi)
+        n = random.randint(1,4738)
+        top = random.randint(1039,2538)
+        uatop = random.randint(609,709)
+        clas = random.randint(4039,4438)
+        ua = random.randint(1,608)
+        uabio = random.randint(710,838)
+        uanonfic = random.randint(839,1038)
+        nonfic = random.randint(2539,3038)
+        bio = random.randint(3039,3438)
+        hist = random.randint(3439,3638)
+        fant = random.randint(3639,3838)
+        tril = random.randint(3839,4038)
+        scific = random.randint(4439,4738)
+
+        name = request.form.get("categories")
+
+        if request.form['ua'] == 'ua' and name == 'top':
+            top = db.execute("SELECT * FROM books WHERE id == ?", top)
+            return render_template("index.html", top=top)
+
+        elif request.form['ua'] == 'ua' and name == 'uatop':
+            uatop = db.execute("SELECT * FROM books WHERE id == ?", uatop)
+            return render_template("index.html", uatop=uatop)
+
+        elif request.form['ua'] == 'ua' and name == 'clas':
+            clas = db.execute("SELECT * FROM books WHERE id == ?", clas)
+            return render_template("index.html", clas=clas)
+
+        elif request.form['ua'] == 'my_list':
+            my_list = db.execute("SELECT * FROM my WHERE orderID == ?", n)
+            return render_template("index.html", my_list = my_list)
+        elif request.form['ua'] == 'ua':
+            UkrLit = db.execute("SELECT * FROM books WHERE id == ?", n)
+            return render_template("index.html", UkrLit=UkrLit, name = name)
 
 
 
         return render_template("index.html")
+
     return render_template("index.html")
 
 
@@ -73,39 +95,18 @@ def index():
 def buy():
     """Buy shares of stock"""
     if request.method == "POST":
-        symbol1 = request.form.get("symbol")
-        symbol = symbol1.upper()
-        shares = request.form.get("shares")
-        stock = lookup(symbol)
-        if not symbol or stock == None:
-            return apology("no symbol entered or no such stock symbol exists", 403)
-        if not shares.isnumeric() or int(shares) < 1 or not shares:
-            return apology("no shares entered or shares is not a positive integer", 403)
-        # Check price
-        price = stock["price"]
-        # Check user balance
-        balance = db.execute("SELECT cash FROM users WHERE id == ?", session["user_id"])
-        if balance[0]["cash"] < (price * int(shares)):
-            return apology("No money", 403)
+        title = request.form.get("title")
+        author = request.form.get("author")
 
-        total_price = stock["price"] * int(shares)
-        portfolio = db.execute("INSERT INTO portfolio (usernameID, symbol, stock, price, number_of_shares, total_price, stat) VALUES(?, ?, ?, ?, ?, ?, ?)", session["user_id"],stock["symbol"], stock["name"], stock["price"], int(shares), total_price, "buy")
-        x = balance[0]["cash"] - total_price
-        update = db.execute("UPDATE users SET cash == ? WHERE id == ?", x, session["user_id"])
+        db.execute("INSERT INTO my (userID, title, author) VALUES(?, ?, ?)", session["user_id"], title, author)
+        MyList = db.execute("SELECT title, author FROM my")
 
-        my_symbol = db.execute("SELECT symb FROM my WHERE userID = ? AND symb = ?", session["user_id"], symbol)
-        my_shares = db.execute("SELECT shares FROM my WHERE userID = ? AND symb = ?", session["user_id"], symbol)
+        return render_template("buy.html", MyList = MyList)
 
-        if len(my_symbol) >= 1:
-            if symbol == my_symbol[0]["symb"]:
-                new_shares = my_shares[0]["shares"] + int(shares)
-                db.execute("UPDATE my SET shares = ? WHERE userID = ? AND symb = ?", new_shares, session["user_id"], symbol)
-        else:
-            db.execute("INSERT INTO my (userID, symb, name, shares) VALUES(?, ?, ?, ?)", session["user_id"], stock["symbol"], stock["name"], int(shares))
-
-        return render_template("buy.html")
     else:
-        return render_template("buy.html")
+        # Display the entries in the database on index.html
+        MyList = db.execute("SELECT title, author FROM my")
+        return render_template("buy.html", MyList = MyList)
 
 
 
