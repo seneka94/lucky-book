@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<main class="container py-5 text-center">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text">Назва книги</th>
+                <th class="text">Автор</th>
+                <th class="text">Жанр</th>
+                <th class="text">Додаткова інформація</th>
+                <th class="text">Опції</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in my %}
+            <tr>
+                <td class="text">{{ row.title }}</td>
+                <td class="text">{{ row.author }}</td>
+                <td class="text">{{ row.status }}</td>
+                <td class="text">{{ row.coments }}</td>
+                <td class="text">
+                    <form action="/add" method="post">
+                        <input name="addID" type="hidden" value="{{ row.orderID }}">
+                        <input title="Перемістити в 'Прочитане'" class="btn btn-success btn-square-sm" type="submit" value="✓">
+                    </form>
+                    <form action="/delete" method="post">
+                        <input name="delete" type="hidden" value="{{ row.orderID }}">
+                        <input title="Видалити" class="btn btn-danger btn-square-sm" type="submit" value="x">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+        </main>
+{% endblock %}

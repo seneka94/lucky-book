@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<meta name="generator" content="Web Page Maker (unregistered version)">
+
+
+<SCRIPT src="globalCookie.js"></SCRIPT>
+<SCRIPT type="text/javascript">
+function saveIndex(){ var sfv=''
+var fe=document.forms['next'].elements;
+for(i=0;i<fe.length;i++){ if(fe[i].type=='select-one' ){sfv+=''+fe[i].selectedIndex+','}}
+setCookie('formEindex',sfv,2)
+}
+function setFormSelects(){ if(getCookie('formEindex')){ sfv=getCookie('formEindex');
+sfv=sfv.split(',');
+var fe=document.forms['next'].elements;
+for(i=0;i<fe.length;i++){fe[i].selectedIndex=sfv[i]}
+}
+else{alert('no cookie!\n got script?')}
+}
+window.onload= setFormSelects;
+</SCRIPT>
+</head>
+<body>
+
+<form name="next" method="POST" action="test.php" style="margin:0px">
+
+<select select onchange="saveIndex()" name="slot1" >
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+</select>
+<select onchange="saveIndex()" name="port2">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
+<input name="Next" type="submit" value="Next">
+</html>

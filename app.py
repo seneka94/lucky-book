@@ -45,7 +45,14 @@ def after_request(response):
 #@login_required
 def index():
     """Show portfolio of stocks"""
+    name = { "all": "", "n": "", "top": "", "uatop": "", "clas": "", "ua": "", "uabio": "", "uanonfic": "", "nonfic": "", "bio": "", "hist": "", "fant": "", "tril": "", "scific": ""}
+
     if request.method == "POST":
+        mycount = db.execute("SELECT COUNT(orderID) FROM my")
+        
+
+        my = random.randint(1, mycount[0]["COUNT(orderID)"])
+
         n = random.randint(1,4738)
         top = random.randint(1039,2538)
         uatop = random.randint(609,709)
@@ -60,54 +67,77 @@ def index():
         tril = random.randint(3839,4038)
         scific = random.randint(4439,4738)
 
-        name = request.form.get("categories")
+        selected = request.form.get("categories")
+        name[selected] = "selected"
 
-        if request.form['ua'] == 'ua' and name == 'top':
+        if selected == 'my':
+            my = db.execute("SELECT * FROM my WHERE orderID == ?", my)
+            return render_template("index.html", my=my, name=name)
+        elif selected == 'top':
             top = db.execute("SELECT * FROM books WHERE id == ?", top)
-            return render_template("index.html", top=top)
-
-        elif request.form['ua'] == 'ua' and name == 'uatop':
+            return render_template("index.html", top=top, name=name)
+        elif selected == 'uatop':
             uatop = db.execute("SELECT * FROM books WHERE id == ?", uatop)
-            return render_template("index.html", uatop=uatop)
-
-        elif request.form['ua'] == 'ua' and name == 'clas':
+            return render_template("index.html", uatop=uatop, name=name)
+        elif selected == 'clas':
             clas = db.execute("SELECT * FROM books WHERE id == ?", clas)
-            return render_template("index.html", clas=clas)
+            return render_template("index.html", clas=clas, name=name)
+        elif selected == 'ua':
+            ua = db.execute("SELECT * FROM books WHERE id == ?", ua)
+            return render_template("index.html", ua=ua, name=name)
+        elif selected == 'uabio':
+            uabio = db.execute("SELECT * FROM books WHERE id == ?", uabio)
+            return render_template("index.html", uabio=uabio, name=name)
+        elif selected == 'uanonfic':
+            uanonfic = db.execute("SELECT * FROM books WHERE id == ?", uanonfic)
+            return render_template("index.html", uanonfic=uanonfic, name=name)
+        elif selected == 'nonfic':
+            nonfic = db.execute("SELECT * FROM books WHERE id == ?", nonfic)
+            return render_template("index.html", nonfic=nonfic, name=name)
+        elif selected == 'bio':
+            bio = db.execute("SELECT * FROM books WHERE id == ?", bio)
+            return render_template("index.html", bio=bio, name=name)
+        elif selected == 'hist':
+            hist = db.execute("SELECT * FROM books WHERE id == ?", hist)
+            return render_template("index.html", hist=hist, name=name)
+        elif selected == 'fant':
+            fant = db.execute("SELECT * FROM books WHERE id == ?", fant)
+            return render_template("index.html", fant=fant, name=name)
+        elif selected == 'tril':
+            tril = db.execute("SELECT * FROM books WHERE id == ?", tril)
+            return render_template("index.html", tril=tril, name=name)
+        elif selected == 'scific':
+            scific = db.execute("SELECT * FROM books WHERE id == ?", scific)
+            return render_template("index.html", scific=scific, name=name)
 
-        elif request.form['ua'] == 'my_list':
-            my_list = db.execute("SELECT * FROM my WHERE orderID == ?", n)
-            return render_template("index.html", my_list = my_list)
-        elif request.form['ua'] == 'ua':
-            UkrLit = db.execute("SELECT * FROM books WHERE id == ?", n)
-            return render_template("index.html", UkrLit=UkrLit, name = name)
+        elif selected == 'all':
+            all = db.execute("SELECT * FROM books WHERE id == ?", n)
+            return render_template("index.html", all=all, name=name)
+
+        return render_template("index.html", name=name)
+    return render_template("index.html", name=name)
 
 
 
-        return render_template("index.html")
-
-    return render_template("index.html")
-
-
-
-
-@app.route("/buy", methods=["GET", "POST"])
+@app.route("/add_book", methods=["GET", "POST"])
 @login_required
-def buy():
+def add_book():
     """Buy shares of stock"""
     if request.method == "POST":
         title = request.form.get("title")
         author = request.form.get("author")
+        genre = request.form.get("genre")
+        other = request.form.get("other")
 
-        db.execute("INSERT INTO my (userID, title, author) VALUES(?, ?, ?)", session["user_id"], title, author)
-        MyList = db.execute("SELECT title, author FROM my")
+        db.execute("INSERT INTO my (userID, title, author, status, coments) VALUES(?, ?, ?, ?, ?)", session["user_id"], title, author, genre, other)
+        my = db.execute("SELECT * FROM my WHERE userID == ?", session["user_id"])
 
-        return render_template("buy.html", MyList = MyList)
+        return render_template("add_book.html", my=my)
 
     else:
         # Display the entries in the database on index.html
-        MyList = db.execute("SELECT title, author FROM my")
-        return render_template("buy.html", MyList = MyList)
-
+        my = db.execute("SELECT * FROM my WHERE userID == ?", session["user_id"])
+        return render_template("add_book.html", my=my)
 
 
 @app.route("/history")
@@ -257,3 +287,66 @@ def sell():
         return render_template("sell.html")
     else:
         return render_template("sell.html")
+
+
+@app.route("/my_list")
+@login_required
+def my_list():
+    """Show history of transactions"""
+
+    my = db.execute("SELECT * FROM my WHERE userID == ?", session['user_id'])
+    return render_template("my_list.html", my=my)
+
+
+@app.route("/top")
+@login_required
+def top():
+    """Show history of transactions"""
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ?", 1039, 2538)
+    return render_template("top.html", table=table)
+
+
+@app.route("/add", methods=["POST"])
+def add():
+
+    id = request.form.get("id")
+    addID = request.form.get("addID")
+    inread = request.form.get("read")
+
+    book = db.execute("SELECT * FROM books WHERE id == ?", id)
+    read = db.execute("SELECT * FROM my WHERE orderID == ? AND userID == ?", addID, session['user_id'])
+    InRead = db.execute("SELECT * FROM books WHERE id == ?", inread)
+
+    if id:
+        db.execute("INSERT INTO my (userID, title, author) VALUES(?, ?, ?)", session['user_id'], book[0]["title"], book[0]["author"])
+        return redirect("/top")
+    elif addID:
+        db.execute("INSERT INTO read (userID, title, author) VALUES(?, ?, ?)", session['user_id'], read[0]["title"], read[0]["author"])
+        db.execute("DELETE FROM my WHERE orderID = ?", addID)
+        return redirect("/my_list")
+    if inread:
+        db.execute("INSERT INTO read (userID, title, author) VALUES(?, ?, ?)", session['user_id'], InRead[0]["title"], InRead[0]["author"])
+        return redirect("/top")
+    return redirect("/top")
+
+
+@app.route("/delete", methods=["POST"])
+def delete():
+
+    delete = request.form.get("delete")
+    dell = request.form.get("dell")
+    if delete:
+        db.execute("DELETE FROM my WHERE orderID = ?", delete)
+        return redirect("/my_list")
+    elif dell:
+        db.execute("DELETE FROM read WHERE id = ?", dell)
+        return redirect("/read")
+    return redirect("/")
+
+
+@app.route("/read")
+@login_required
+def read():
+
+    table = db.execute("SELECT * FROM read WHERE userID == ?", session['user_id'])
+    return render_template("read.html", table=table)

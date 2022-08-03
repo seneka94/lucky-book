@@ -21,13 +21,35 @@ nav .navbar-brand .green
 {
     color: #2e944b;
 }
-.color-yellow
+
+
+
+a.nav-link:link
 {
-    color: ffffff;
+   color: #000000;
+   text-decoration: none;
 }
-.color-red
+a.nav-link:visited
 {
-    color: ff00ff;
+   color: #000000;
+   text-decoration: none;
+}
+a.nav-link:hover
+{
+   color: #fb3f00;
+   text-decoration: none;
+}
+a.nav-link:active
+{
+   color: #fb3f00;
+   text-decoration: none;
+}
+
+
+.butt
+{
+    height:50px;
+    width:50px;
 }
 
 

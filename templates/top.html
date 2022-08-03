@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<main class="container py-5 text-center">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text">Обкладинка</th>
+                <th class="text">Назва книги</th>
+                <th class="text">Автор</th>
+                <th class="text">Рейтинг</th>
+                <th class="text">К-ть оцінок</th>
+                <th class="text">Позиція</th>
+                <th class="text">Додати в "Мій список"</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in table %}
+            <tr>
+                <td><img  src="{{ row.image }}"></td>
+                <td class="text"><a href="{{ row.link }}" class="nav-link" title="Більше про книгу на goodreads" target="_blank" >{{ row.title }}</td>
+                <td class="text"><a href="{{ row.AuthorLink }}" class="nav-link" title="Більше про автора на goodreads" target="_blank" >{{ row.author }}</a></td>
+                <td class="text">{{ row.rating }}</td>
+                <td class="text">{{ row.ratings }}</td>
+                <td class="text">{{ row.score }}</td>
+                <td>
+                    <form action="/add" method="post">
+                        <input name="id" type="hidden" value="{{ row.id }}">
+                        <input class="btn btn-success btn-sm" type="submit" value="+'Мій список'">
+                    </form>
+                    <form action="/add" method="post">
+                        <input name="read" type="hidden" value="{{ row.id }}">
+                        <input class="btn btn-success btn-sm" type="submit" value="+'Прочитане'">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+        </main>
+{% endblock %}
