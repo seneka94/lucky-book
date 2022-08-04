@@ -107,16 +107,16 @@
                         {% endfor %}
 
                         {% for row in top %}
-                            <img  src="{{ top[0]["image"] }}">
-                            <h3>{{ top[0]["title"] }}</h3>
-                            <h5>{{ top[0]["author"] }}</h5>
-                            <h6>{{ top[0]["rating"] }}</h6>
-                            <form action="{{ top[0]["link"] }}" method="get" target="_blank">
+                            <p class="text-start"><img  src="{{ top[0]["image"] }}"></p>
+                            <h3 class="text-start">{{ top[0]["title"] }}</h3>
+                            <h5 class="text-start">{{ top[0]["author"] }}</h5>
+                            <h6 class="text-start">{{ top[0]["rating"] }}</h6>
+                            <h6 class="text-start"> <form action="{{ top[0]["link"] }}" method="get" target="_blank">
                                 <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
-                            </form>
-                            <form  method="get">
+                            </form> </h6>
+                            <h6 class="text-start"><form  method="get">
                                 <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
+                            </form></h6>
                         {% endfor %}
 
                         {% for row in uatop %}
