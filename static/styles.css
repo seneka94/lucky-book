@@ -52,7 +52,7 @@ a.nav-link:active
     width:50px;
 }
 
-.square {
-    width: 50%;
-    height: 50%;
-  }
+.colorred
+{
+    color:red
+}
