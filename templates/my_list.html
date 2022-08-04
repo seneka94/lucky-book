@@ -12,8 +12,7 @@
             <tr>
                 <th class="text">Назва книги</th>
                 <th class="text">Автор</th>
-                <th class="text">Жанр</th>
-                <th class="text">Додаткова інформація</th>
+                <th class="text">Коментар</th>
                 <th class="text">Опції</th>
             </tr>
         </thead>
@@ -22,7 +21,6 @@
             <tr>
                 <td class="text">{{ row.title }}</td>
                 <td class="text">{{ row.author }}</td>
-                <td class="text">{{ row.status }}</td>
                 <td class="text">{{ row.coments }}</td>
                 <td class="text">
                     <form action="/add" method="post">

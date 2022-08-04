@@ -48,10 +48,6 @@ def index():
     name = { "all": "", "n": "", "top": "", "uatop": "", "clas": "", "ua": "", "uabio": "", "uanonfic": "", "nonfic": "", "bio": "", "hist": "", "fant": "", "tril": "", "scific": ""}
 
     if request.method == "POST":
-        mycount = db.execute("SELECT COUNT(orderID) FROM my")
-        
-
-        my = random.randint(1, mycount[0]["COUNT(orderID)"])
 
         n = random.randint(1,4738)
         top = random.randint(1039,2538)
@@ -71,8 +67,20 @@ def index():
         name[selected] = "selected"
 
         if selected == 'my':
-            my = db.execute("SELECT * FROM my WHERE orderID == ?", my)
-            return render_template("index.html", my=my, name=name)
+            delete = db.execute("DELETE FROM temp")
+            my = db.execute("SELECT * FROM my WHERE userID == ?", session["user_id"])
+            count = 0
+            for row in my:
+                count +=1
+                db.execute("INSERT  INTO temp (title, author, num) VALUES (?, ?, ?)", row["title"], row["author"], count)
+            mycount = db.execute("SELECT COUNT(id) FROM temp")
+            if mycount[0]["COUNT(id)"] < 1:
+                apollogy = 'Додайте книги у "Мій список"!'
+                return render_template("index.html", apollogy=apollogy, name=name)
+            myrand = random.randint(1, mycount[0]["COUNT(id)"])
+            sel = db.execute("SELECT * FROM temp WHERE num == ?", myrand)
+            return render_template("index.html", sel=sel, name=name)
+
         elif selected == 'top':
             top = db.execute("SELECT * FROM books WHERE id == ?", top)
             return render_template("index.html", top=top, name=name)
@@ -122,22 +130,26 @@ def index():
 @app.route("/add_book", methods=["GET", "POST"])
 @login_required
 def add_book():
-    """Buy shares of stock"""
+
+    name = { "MyList": "", "READ": ""}
+
     if request.method == "POST":
+        addinlists = request.form.get("lists")
         title = request.form.get("title")
         author = request.form.get("author")
-        genre = request.form.get("genre")
         other = request.form.get("other")
 
-        db.execute("INSERT INTO my (userID, title, author, status, coments) VALUES(?, ?, ?, ?, ?)", session["user_id"], title, author, genre, other)
-        my = db.execute("SELECT * FROM my WHERE userID == ?", session["user_id"])
+        name[addinlists] = "selected"
 
-        return render_template("add_book.html", my=my)
+        if addinlists == "MyList":
+            db.execute("INSERT INTO my (userID, title, author, coments) VALUES(?, ?, ?, ?)", session["user_id"], title, author, other)
+
+        if addinlists == "READ":
+            db.execute("INSERT INTO read (userID, title, author, notes) VALUES(?, ?, ?, ?)", session["user_id"], title, author, other)
+        return render_template("add_book.html", name=name)
 
     else:
-        # Display the entries in the database on index.html
-        my = db.execute("SELECT * FROM my WHERE userID == ?", session["user_id"])
-        return render_template("add_book.html", my=my)
+        return render_template("add_book.html", name=name)
 
 
 @app.route("/history")
@@ -318,13 +330,13 @@ def add():
     InRead = db.execute("SELECT * FROM books WHERE id == ?", inread)
 
     if id:
-        db.execute("INSERT INTO my (userID, title, author) VALUES(?, ?, ?)", session['user_id'], book[0]["title"], book[0]["author"])
+        db.execute("INSERT INTO my (userID, title, author, coments) VALUES(?, ?, ?, ?)", session['user_id'], book[0]["title"], book[0]["author"], "-")
         return redirect("/top")
     elif addID:
         db.execute("INSERT INTO read (userID, title, author) VALUES(?, ?, ?)", session['user_id'], read[0]["title"], read[0]["author"])
         db.execute("DELETE FROM my WHERE orderID = ?", addID)
         return redirect("/my_list")
-    if inread:
+    elif inread:
         db.execute("INSERT INTO read (userID, title, author) VALUES(?, ?, ?)", session['user_id'], InRead[0]["title"], InRead[0]["author"])
         return redirect("/top")
     return redirect("/top")

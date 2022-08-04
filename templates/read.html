@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+
 <main class="container py-5 text-center">
 
     <table class="table">
@@ -12,9 +13,8 @@
             <tr>
                 <th class="text">Назва книги</th>
                 <th class="text">Автор</th>
-                <th class="text">Жанр</th>
                 <th class="text">Моя оцінка</th>
-                <th class="text">Нотатки</th>
+                <th class="text">Коментар</th>
                 <th class="text">Опції</th>
             </tr>
         </thead>
@@ -24,8 +24,7 @@
                     <td class="text">{{ row.title }}</td>
                     <td class="text">{{ row.author }}</td>
                     <td class="text"></td>
-                    <td class="text"></td>
-                    <td class="text"></td>
+                    <td class="text">{{ row.notes }}</td>
                     <td class="text">
                         <form action="/delete" method="post">
                             <input name="dell" type="hidden" value="{{ row.id }}">

@@ -8,45 +8,30 @@
 <div class="container">
 
     <div class="section">
-        <h4>Добавити книгу в "Мій список"</h4>
-        <form action="/add_book" method="post">
-            <div class="mb-3">
-                <input autocomplete="off" autofocus class="mx-auto w-auto" id="title" name="title" placeholder="Назва книги" type="text">
 
-                <input autocomplete="off" autofocus class="mx-auto w-auto" id="author" name="author" placeholder="Автор" type="text">
+        <h4>
+            <form action="/add_book" method="post">
+                    <label for="books">Добавити книгу в </label>
+                    <div class="btn-group">
+                        <div class="dropdown-container">
+                        <select id="lists" name="lists">
+                            <option class="dropdown-item" value="MyList" {{ name["MyList"] }} >Мій список</option>
+                            <option class="dropdown-item" value="READ" {{ name["READ"] }} >Прочитане</option>
+                        </select>
+                        </div>
+                    </div>
+                </h4>
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="mx-auto w-auto" id="title" name="title" placeholder="Назва книги" type="text">
 
-                <input autocomplete="off" autofocus class="mx-auto w-auto" id="genre" name="genre" placeholder="Жанр" type="text">
+                        <input autocomplete="off" autofocus class="mx-auto w-auto" id="author" name="author" placeholder="Автор" type="text">
 
-                <input autocomplete="off" autofocus class="mx-auto w-auto" id="other" name="other" placeholder="Додаткова інформація" type="text">
 
-                <button class="btn btn-primary" type="submit">Добавити</button>
-            </div>
-        </form>
-    </div>
+                        <input autocomplete="off" autofocus class="mx-auto w-auto" id="other" name="other" placeholder="Коментар" type="text">
 
-    <div class="section">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="text">Назва книги</th>
-                    <th class="text">Автор</th>
-                    <th class="text">Жанр</th>
-                    <th class="text">Додаткова інформація</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in my %}
-                <tr>
-                    <td class="text">{{ row.title }}</td>
-                    <td class="text">{{ row.author }}</td>
-                    <td class="text">{{ row.status }}</td>
-                    <td class="text">{{ row.coments }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                        <button class="btn btn-primary" type="submit">Добавити</button>
+                    </div>
+            </form>
 
 </div>
-
 {% endblock %}

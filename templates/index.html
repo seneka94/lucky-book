@@ -21,6 +21,7 @@
                                 <div class="btn-group">
                                     <div class="dropdown-container">
                                         <select id="categories" name="categories">
+                                            {% if session["user_id"] %}
                                             <option class="dropdown-item" value="all" {{ name["all"] }} >Усі книги</option>
 
                                             <option class="dropdown-item" value="my" {{ name["my"] }} >Мій список</option>
@@ -37,6 +38,21 @@
                                             <option class="dropdown-item" value="fant" {{ name["fant"] }} >Фентезі</option>
                                             <option class="dropdown-item" value="tril" {{ name["tril"] }} >Триллери і містика</option>
                                             <option class="dropdown-item" value="scific" {{ name["scific"] }} >Наукова фантастика</option>
+                                            {% else %}
+                                            <option class="dropdown-item" value="all" {{ name["all"] }} >Усі книги</option>
+                                            <option class="dropdown-item" value="top" {{ name["top"] }} >ТОП світової літератури</option>
+                                            <option class="dropdown-item" value="uatop" {{ name["uatop"] }} >ТОП української літератури</option>
+                                            <option class="dropdown-item" value="clas" {{ name["clas"] }} >Культова класика</option>
+                                            <option class="dropdown-item" value="ua" {{ name["ua"] }} >Українська художня література</option>
+                                            <option class="dropdown-item" value="uabio" {{ name["uabio"] }} >Біографії і Мемуари з України </option>
+                                            <option class="dropdown-item" value="uanonfic" {{ name["uanonfic"] }} >“Nonfiction” з України і про Укаїну </option>
+                                            <option class="dropdown-item" value="nonfic" {{ name["nonfic"] }} >“Nonfiction” (без біографій)</option>
+                                            <option class="dropdown-item" value="bio" {{ name["bio"] }} >Біографії і Мемуари </option>
+                                            <option class="dropdown-item" value="hist" {{ name["hist"] }} >Історичні книги </option>
+                                            <option class="dropdown-item" value="fant" {{ name["fant"] }} >Фентезі</option>
+                                            <option class="dropdown-item" value="tril" {{ name["tril"] }} >Триллери і містика</option>
+                                            <option class="dropdown-item" value="scific" {{ name["scific"] }} >Наукова фантастика</option>
+                                            {% endif %}
                                         </select>
                                     </div>
                                 </button>
@@ -51,9 +67,11 @@
                 <div class="col-6">
                     <div class="p-3">
 
-                        {% for row in my %}
-                            <h3>{{ my[0]["title"] }}</h3>
-                            <h5>{{ my[0]["author"] }}</h5>
+                        <h3 style="color: red">{{ apollogy }}</h3>
+
+                        {% for row in sel %}
+                            <h3>{{ sel[0]["title"] }}</h3>
+                            <h5>{{ sel[0]["author"] }}</h5>
                             <h6></h6>
                         {% endfor %}
 
@@ -214,7 +232,6 @@
                         {% endfor %}
 
                         {% for row in all %}
-                            <p> {{ name }} </p>
                             <img  src="{{ all[0]["image"] }}">
                             <h3>{{ all[0]["title"] }}</h3>
                             <h5>by {{ all[0]["author"] }}</h5>
