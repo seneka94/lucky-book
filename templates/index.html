@@ -16,9 +16,7 @@
                             <select id="categories" name="categories">
                                 {% if session["user_id"] %}
                                 <option class="dropdown-item" value="all" {{ name["all"] }} >Усі книги</option>
-
                                 <option class="dropdown-item" value="my" {{ name["my"] }} >Мій список</option>
-
                                 <option class="dropdown-item" value="top" {{ name["top"] }} >ТОП світової літератури</option>
                                 <option class="dropdown-item" value="uatop" {{ name["uatop"] }} >ТОП української літератури</option>
                                 <option class="dropdown-item" value="clas" {{ name["clas"] }} >Культова класика</option>
@@ -52,48 +50,36 @@
                   </div>
             </div>
             <div class="container text-center">
-                <div class="row g-2">
-                  <div class="col-6">
-                    <div class="p-3">
-                        <div class='container'>
-
-
-
-                            <p class="text-end"><button id="ua" name="ua" value="ua" class="btn btn-dark btn-lg" type="submit"> <span class="blue">Lucky</span><span class="colorred">Book</span> </button>
-                            </p>
-                            </form>
-
-                    </div>
-                </div>
+                <div class="p-3">
+                    <div class='container'>
+                        <p class="text"><button id="ua" name="ua" value="ua" class="btn btn-dark btn-lg" type="submit"> <span class="blue">Lucky</span><span class="colorred">Book</span> </button>
+                        </p>
+                        </form>
             </div>
 
-                <div class="col-6 bg-red">
+            <div class="container overflow-hidden text-center">
+                <div class="row gy-5">
+                    {% for row in all %}
+                  <div class="col-6">
+                    <div class="p-3 text-end"><img  src="{{ all[0]["image"] }}"></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="p-3  text-start"><h3>{{ all[0]["title"] }}</h3>
+                        <h5>by {{ all[0]["author"] }}</h5>
+                        <h6>rating {{ all[0]["rating"]}}</h6>
+                        <form action="{{ all[0]["link"] }}" method="get" target="_blank">
+                            <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                        </form>
+                        <form  method="get">
+                            <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                        </form></td></div>
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
+
                     <div class="p-3">
-
-
-
-                        <table>
-                            {% for row in all %}
-
-
-
-                            <tr>
-                                <td class="text-start"><img  src="{{ all[0]["image"] }}"></td>
-                                <td class="text-start"><h3>{{ all[0]["title"] }}</h3>
-                                    <h5>by {{ all[0]["author"] }}</h5>
-                                    <h6>rating {{ all[0]["rating"]}}</h6>
-                                    <form action="{{ all[0]["link"] }}" method="get" target="_blank">
-                                        <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
-                                    </form>
-                                    <form  method="get">
-                                        <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                                    </form></td>
-                                <td class="text"></td>
-                                <td class="text"></td>
-                                <td class="text"></td>
-                             </tr>
-                             {% endfor %}
-                        </table>
+                      
 
 
 
@@ -264,10 +250,7 @@
 
 
 
-                    </div>
-                  </div>
-                </div>
-              </div>
+
 
 
 

@@ -1,63 +1,278 @@
-<form  method="post">
-  <p><button id="ua" name="ua" value="ua" class="btn btn-primary" type="submit">УкрЛіт</button></p>
-</form>
-<form  method="post">
-  <p><button id="ua" name="ua" value="classic" class="btn btn-primary" type="submit">classic</button></p>
-</form>
+{% extends "layout.html" %}
 
-<form  method="post">
-  <p><button id="ua" name="ua" value="new" class="btn btn-primary" type="submit">21th top</button></p>
-</form>
-<form  method="post">
-  <p><button id="ua" name="ua" value="biographi" class="btn btn-primary" type="submit">biographi</button></p>
-</form>
-<form  method="post">
-  <p><button id="ua" name="ua" value="my_list" class="btn btn-primary" type="submit">мій список</button></p>
-</form>
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<main>
+
+            <div class="p-3">
+                <h4>Не знаєш яку наступну книжку прочитати?</h3>
+                <h5>Довірся сигналу з космосу і потрібна книга тебе знайде</h5>
+                <form method="post">
+                    <div class="btn-group">
+                        <div class="dropdown-container">
+                            <select id="categories" name="categories">
+                                {% if session["user_id"] %}
+                                <option class="dropdown-item" value="all" {{ name["all"] }} >Усі книги</option>
+                                <option class="dropdown-item" value="my" {{ name["my"] }} >Мій список</option>
+                                <option class="dropdown-item" value="top" {{ name["top"] }} >ТОП світової літератури</option>
+                                <option class="dropdown-item" value="uatop" {{ name["uatop"] }} >ТОП української літератури</option>
+                                <option class="dropdown-item" value="clas" {{ name["clas"] }} >Культова класика</option>
+                                <option class="dropdown-item" value="ua" {{ name["ua"] }} >Українська художня література</option>
+                                <option class="dropdown-item" value="uabio" {{ name["uabio"] }} >Біографії і Мемуари з України </option>
+                                <option class="dropdown-item" value="uanonfic" {{ name["uanonfic"] }} >“Nonfiction” з України і про Укаїну </option>
+                                <option class="dropdown-item" value="nonfic" {{ name["nonfic"] }} >“Nonfiction” (без біографій)</option>
+                                <option class="dropdown-item" value="bio" {{ name["bio"] }} >Біографії і Мемуари </option>
+                                <option class="dropdown-item" value="hist" {{ name["hist"] }} >Історичні книги </option>
+                                <option class="dropdown-item" value="fant" {{ name["fant"] }} >Фентезі</option>
+                                <option class="dropdown-item" value="tril" {{ name["tril"] }} >Триллери і містика</option>
+                                <option class="dropdown-item" value="scific" {{ name["scific"] }} >Наукова фантастика</option>
+                                {% else %}
+                                <option class="dropdown-item" value="all" {{ name["all"] }} >Усі книги</option>
+                                <option class="dropdown-item" value="top" {{ name["top"] }} >ТОП світової літератури</option>
+                                <option class="dropdown-item" value="uatop" {{ name["uatop"] }} >ТОП української літератури</option>
+                                <option class="dropdown-item" value="clas" {{ name["clas"] }} >Культова класика</option>
+                                <option class="dropdown-item" value="ua" {{ name["ua"] }} >Українська художня література</option>
+                                <option class="dropdown-item" value="uabio" {{ name["uabio"] }} >Біографії і Мемуари з України </option>
+                                <option class="dropdown-item" value="uanonfic" {{ name["uanonfic"] }} >“Nonfiction” з України і про Укаїну </option>
+                                <option class="dropdown-item" value="nonfic" {{ name["nonfic"] }} >“Nonfiction” (без біографій)</option>
+                                <option class="dropdown-item" value="bio" {{ name["bio"] }} >Біографії і Мемуари </option>
+                                <option class="dropdown-item" value="hist" {{ name["hist"] }} >Історичні книги </option>
+                                <option class="dropdown-item" value="fant" {{ name["fant"] }} >Фентезі</option>
+                                <option class="dropdown-item" value="tril" {{ name["tril"] }} >Триллери і містика</option>
+                                <option class="dropdown-item" value="scific" {{ name["scific"] }} >Наукова фантастика</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </button>
+                  </div>
+            </div>
+            <div class="container text-center">
+                <div class="row g-2">
+                  <div class="col-6">
+                    <div class="p-3">
+                        <div class='container'>
+
+
+
+                            <p class="text-end"><button id="ua" name="ua" value="ua" class="btn btn-dark btn-lg" type="submit"> <span class="blue">Lucky</span><span class="colorred">Book</span> </button>
+                            </p>
+                            </form>
+
+                    </div>
+                </div>
+            </div>
+
+                <div class="col-6 bg-red">
+                    <div class="p-3">
+
+
+
+                        <table>
+                            {% for row in all %}
+
+
+
+                            <tr>
+                                <td class="text-start"><img  src="{{ all[0]["image"] }}"></td>
+                                <td class="text-start"><h3>{{ all[0]["title"] }}</h3>
+                                    <h5>by {{ all[0]["author"] }}</h5>
+                                    <h6>rating {{ all[0]["rating"]}}</h6>
+                                    <form action="{{ all[0]["link"] }}" method="get" target="_blank">
+                                        <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                    </form>
+                                    <form  method="get">
+                                        <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                                    </form></td>
+                                <td class="text"></td>
+                                <td class="text"></td>
+                                <td class="text"></td>
+                             </tr>
+                             {% endfor %}
+                        </table>
 
 
 
 
+                        <h3 style="color: red">{{ apollogy }}</h3>
+
+                        {% for row in sel %}
+                            <h3>{{ sel[0]["title"] }}</h3>
+                            <h5>{{ sel[0]["author"] }}</h5>
+                            <h6></h6>
+                        {% endfor %}
+
+                        {% for row in top %}
+                            <p class="text-start"><img  src="{{ top[0]["image"] }}"></p>
+                            <h3 class="text-start">{{ top[0]["title"] }}</h3>
+                            <h5 class="text-start">{{ top[0]["author"] }}</h5>
+                            <h6 class="text-start">{{ top[0]["rating"] }}</h6>
+                            <h6 class="text-start"> <form action="{{ top[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form> </h6>
+                            <h6 class="text-start"><form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form></h6>
+                        {% endfor %}
+
+                        {% for row in uatop %}
+                            <img  src="{{ uatop[0]["image"] }}">
+                            <h3>{{ uatop[0]["title"] }}</h3>
+                            <h5>{{ uatop[0]["author"] }}</h5>
+                            <h6>{{ uatop[0]["rating"] }}</h6>
+                            <form action="{{ uatop[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in clas %}
+                            <img  src="{{ clas[0]["image"] }}">
+                            <h3>{{ clas[0]["title"] }}</h3>
+                            <h5>{{ clas[0]["author"] }}</h5>
+                            <h6>{{ clas[0]["rating"] }}</h6>
+                            <form action="{{ clas[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in ua %}
+                            <img  src="{{ ua[0]["image"] }}">
+                            <h3>{{ ua[0]["title"] }}</h3>
+                            <h5>{{ ua[0]["author"] }}</h5>
+                            <h6>{{ ua[0]["rating"] }}</h6>
+                            <form action="{{ ua[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in uabio %}
+                            <img  src="{{ uabio[0]["image"] }}">
+                            <h3>{{ uabio[0]["title"] }}</h3>
+                            <h5>{{ uabio[0]["author"] }}</h5>
+                            <h6>{{ uabio[0]["rating"] }}</h6>
+                            <form action="{{ uabio[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in uanonfic %}
+                            <img  src="{{ uanonfic[0]["image"] }}">
+                            <h3>{{ uanonfic[0]["title"] }}</h3>
+                            <h5>{{ uanonfic[0]["author"] }}</h5>
+                            <h6>{{ uanonfic[0]["rating"] }}</h6>
+                            <form action="{{ uanonfic[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in nonfic %}
+                            <img  src="{{ nonfic[0]["image"] }}">
+                            <h3>{{ nonfic[0]["title"] }}</h3>
+                            <h5>{{ nonfic[0]["author"] }}</h5>
+                            <h6>{{ nonfic[0]["rating"] }}</h6>
+                            <form action="{{ nonfic[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in bio %}
+                            <img  src="{{ bio[0]["image"] }}">
+                            <h3>{{ bio[0]["title"] }}</h3>
+                            <h5>{{ bio[0]["author"] }}</h5>
+                            <h6>{{ bio[0]["rating"] }}</h6>
+                            <form action="{{ bio[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in hist %}
+                            <img  src="{{ hist[0]["image"] }}">
+                            <h3>{{ hist[0]["title"] }}</h3>
+                            <h5>{{ hist[0]["author"] }}</h5>
+                            <h6>{{ hist[0]["rating"] }}</h6>
+                            <form action="{{ hist[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in fant %}
+                            <img  src="{{ fant[0]["image"] }}">
+                            <h3>{{ fant[0]["title"] }}</h3>
+                            <h5>{{ fant[0]["author"] }}</h5>
+                            <h6>{{ fant[0]["rating"] }}</h6>
+                            <form action="{{ fant[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in tril %}
+                            <img  src="{{ tril[0]["image"] }}">
+                            <h3>{{ tril[0]["title"] }}</h3>
+                            <h5>{{ tril[0]["author"] }}</h5>
+                            <h6>{{ tril[0]["rating"] }}</h6>
+                            <form action="{{ tril[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
+
+                        {% for row in scific %}
+                            <img  src="{{ scific[0]["image"] }}">
+                            <h3>{{ scific[0]["title"] }}</h3>
+                            <h5>{{ scific[0]["author"] }}</h5>
+                            <h6>{{ scific[0]["rating"] }}</h6>
+                            <form action="{{ scific[0]["link"] }}" method="get" target="_blank">
+                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                            </form>
+                            <form  method="get">
+                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
+                            </form>
+                        {% endfor %}
 
 
 
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
 
-<ul class="dropdown-menu dropdown-menu-end">
-  <li><a class="dropdown-item" href="#">Всі</a></li>
-  <li><hr class="dropdown-divider"></li>
-  <li><a class="dropdown-item" href="#">ТОП світової літератури</a></li>
-  <li><a class="dropdown-item" href="#">ТОП української літератури</a></li>
-  <li><a class="dropdown-item" href="#">Культова класика</a></li>
-  <li><hr class="dropdown-divider"></li>
-  <li><a class="dropdown-item" href="#">Українська художня література</a></li>
-  <li><a class="dropdown-item" href="#">Біографії і Мемуари з України</a></li>
-  <li><a class="dropdown-item" href="#">“Nonfiction” з України і про Укаїну</a></li>
-  <li><hr class="dropdown-divider"></li>
-  <li><a class="dropdown-item" href="#">“Nonfiction” (без біографій)</a></li>
-  <li><a class="dropdown-item" href="#">Біографії і Мемуари</a></li>
-  <li><a class="dropdown-item" href="#">Історичні книги</a></li>
-  <li><a class="dropdown-item" href="#">Фентезі</a></li>
-  <li><a class="dropdown-item" href="#">Триллери і містика</a></li>
-  <li><a class="dropdown-item" href="#">Наукова фантастика</a></li>
+        <footer style = "position:relative; top:200px;">
+            <h3>Footer</h3>
+            <p>Remember to check <a href="https://seneka94.github.io/trivia/">test</a></p>
+        </footer>
 
-
-
-  <div class="btn-group">
-    <button id="1" name="1" value="ua" type="button" class="btn btn-ligth btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-        </svg>
-
-      </button>
-    </div>
-
-
-
-
-    <form action="/deregister" method="post">
-      <input name="id" type="hidden" value="{{ registrant.id }}">
-      <input class="btn btn-danger btn-sm" type="submit" value="Deregister">
-  </form>
+</main>
+{% endblock %}

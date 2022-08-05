@@ -56,3 +56,19 @@ a.nav-link:active
 {
     color:red
 }
+
+.-link
+{
+    color: black !important;
+    text-decoration: none;
+}
+
+
+body {
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(245,222,179,1) 100%);
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
