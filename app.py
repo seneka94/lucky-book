@@ -314,7 +314,7 @@ def my_list():
 @login_required
 def top():
     """Show history of transactions"""
-    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ?", 1039, 2538)
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 1039, 2538, 40)
     return render_template("top.html", table=table)
 
 

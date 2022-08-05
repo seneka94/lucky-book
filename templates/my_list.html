@@ -7,8 +7,12 @@
 {% block main %}
 <main class="container py-5 text-center">
 
-    <table class="table">
-        <thead>
+    <div class="p-2">
+        <h4 class="title">Мій список</h4>
+    </div>
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
             <tr>
                 <th class="text">Назва книги</th>
                 <th class="text">Автор</th>
@@ -19,18 +23,18 @@
         <tbody>
             {% for row in my %}
             <tr>
-                <td class="text">{{ row.title }}</td>
-                <td class="text">{{ row.author }}</td>
-                <td class="text">{{ row.coments }}</td>
+                <td class="text-start">{{ row.title }}</td>
+                <td class="text-start">{{ row.author }}</td>
+                <td class="text-start">{{ row.coments }}</td>
                 <td class="text">
                     <form action="/add" method="post">
                         <input name="addID" type="hidden" value="{{ row.orderID }}">
-                        <input title="Перемістити в 'Прочитане'" class="btn btn-success btn-square-sm" type="submit" value="✓">
+                        <input class="btn btn-outline-success btn-sm" type="submit" value="в 'Прочитане'">
                     </form>
-                    <form action="/delete" method="post">
+                    <p><form action="/delete" method="post">
                         <input name="delete" type="hidden" value="{{ row.orderID }}">
-                        <input title="Видалити" class="btn btn-danger btn-square-sm" type="submit" value="x">
-                    </form>
+                        <input class="btn btn-outline-danger btn-sm" type="submit" value="    Видалити   ">
+                    </form></p>
                 </td>
             </tr>
             {% endfor %}
