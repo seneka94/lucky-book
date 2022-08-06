@@ -31,15 +31,14 @@
                     {% if session["user_id"] %}
                         <ul class="navbar-nav me-auto mt-2 ">
                             <li class="nav-item "><a class="nav-link" href="/">Головна</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/add_book">Добавити книгу</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/my_list">Мій список (Прочитати)</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/add_book">Додати книгу</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/my_list">Прочитати</a></li>
                             <li class="nav-item"><a class="nav-link" href="/read">Прочитане</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   Списки книг
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink style="min-width: 230px">
-                                    <li><a id="1" class="dropdown-item" href="/my_list">Мій список</a></li>
                                     <li><a id="2" class="dropdown-item" href="/top">Топ світової літератури</a></li>
                                     <li><a class="dropdown-item" href="/uatop">Топ української літератури</a></li>
                                     <li><a class="dropdown-item" href="/clas">Культова класика</a></li>
@@ -81,7 +80,7 @@
         </main>
 
         <footer class="mb-5 small text-center text-muted">
-            Data provided by <a href="https://www.president.gov.ua/">Штота важноє</a>
+
         </footer>
 
     </body>

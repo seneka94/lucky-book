@@ -28,13 +28,13 @@
             {% for row in table %}
                 <tr>
                     <td class="text"><img  src="{{ row.image_sm }}"></td>
-                    <td class="text-start "><a href="{{ row.link }}" class="link" title="Більше про книгу на goodreads" target="_blank" >{{ row.title }}</td>
+                    <td class="text-start "><a class="link" href="{{ row.link }}"  title="Більше про книгу на goodreads" target="_blank" >{{ row.title }}</td>
                     <td class="text-start"><a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ row.author }}</a></td>
                     <td class="text font-weight-normal">{{ row.rating }}</td>
                     <td>
                         <form action="/add" method="post">
                             <input name="id" type="hidden" value="{{ row.id }}">
-                            <input class="btn btn-outline-primary btn-sm" type="submit" value="в 'Мій список'">
+                            <input class="btn btn-outline-primary btn-sm" type="submit" value="в 'Прочитати'">
                         </form>
                         <p>
                             <form action="/add" method="post">
@@ -48,6 +48,6 @@
         </tbody>
 
     </table>
-    
+
 </main>
 {% endblock %}

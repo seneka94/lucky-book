@@ -8,12 +8,13 @@
 <main class="container py-5 text-center">
 
     <div class="p-2">
-        <h4 class="title">Мій список</h4>
+        <h4 class="title">Прочитати</h4>
     </div>
 
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
+                <th class="text">Обкладинка</th>
                 <th class="text">Назва книги</th>
                 <th class="text">Автор</th>
                 <th class="text">Коментар</th>
@@ -23,7 +24,8 @@
         <tbody>
             {% for row in my %}
             <tr>
-                <td class="text-start">{{ row.title }}</td>
+                <td class="text"> <img src="{{ row.image_sm }}"></td>
+                <td class="text-start" style="font-weight: bold">{{ row.title }}</td>
                 <td class="text-start">{{ row.author }}</td>
                 <td class="text-start">{{ row.coments }}</td>
                 <td class="text">

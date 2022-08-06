@@ -6,31 +6,31 @@
 
 {% block main %}
 <div class="container">
-
-    <div class="section">
-
-        <h4>
-            <form action="/add_book" method="post">
-                    <label for="books">Добавити книгу в </label>
+    <div class="mb-3">
+        <form action="/add_book" method="post">
+                <label class="title1" style="font-weight: bold" for="books">Додати книгу в </label>
                     <div class="btn-group">
                         <div class="dropdown-container">
-                        <select id="lists" name="lists">
-                            <option class="dropdown-item" value="MyList" {{ name["MyList"] }} >Мій список</option>
+                        <select class="title1" style="font-weight: bold" id="lists" name="lists">
+                            <option class="dropdown-item" value="MyList" {{ name["MyList"] }} >Прочитати</option>
                             <option class="dropdown-item" value="READ" {{ name["READ"] }} >Прочитане</option>
                         </select>
                         </div>
                     </div>
-                </h4>
+                </div>
+
                     <div class="mb-3">
-                        <input autocomplete="off" autofocus class="mx-auto w-auto" id="title" name="title" placeholder="Назва книги" type="text">
-
-                        <input autocomplete="off" autofocus class="mx-auto w-auto" id="author" name="author" placeholder="Автор" type="text">
-
-
-                        <input autocomplete="off" autofocus class="mx-auto w-auto" id="other" name="other" placeholder="Коментар" type="text">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Назва книги" type="text">
+                        </div>
+                        <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="author" name="author" placeholder="Автор" type="text">
+                            </div>
+                        <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="other" name="other" placeholder="Коментар" type="text">
+                       </div>
                     </div>
                     <div>
-                        <button class="btn btn-primary" type="submit">Добавити</button>
+                        <button class="btn btn-dark btn-md bg-gradient" type="submit">Додати</button>
                     </div>
             </form>
 

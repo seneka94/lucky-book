@@ -78,7 +78,7 @@ a.link:hover
    text-decoration: underline;
 }
 a.link:active
-{  
+{
    color: #fb3f00;
    text-decoration: none;
 }
@@ -127,7 +127,7 @@ body {
   hr {
    width:50%;
    text-align:left;
-   margin-left:0";
+   margin-left:"0";
    display: block;
    unicode-bidi: isolate;
    margin-block-start: 0.5em;

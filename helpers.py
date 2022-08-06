@@ -35,32 +35,4 @@ def login_required(f):
     return decorated_function
 
 
-def lookup(symbol):
-    """Look up quote for symbol."""
 
-    # Contact API
-    try:
-        api_key = os.environ.get("API_KEY")
-        url = f"https://www.googleapis.com/books/v1/volumes?q={urllib.parse.quote_plus(symbol)}&maxResults=40&orderBy=relevance&keyes&key={api_key}"
-
-                #https://cloud.iexapis.com/stable/stock/{urllib.parse.quote_plus(symbol)}/quote?token={api_key}"
-        response = requests.get(url)
-        response.raise_for_status()
-    except requests.RequestException:
-        return None
-
-    # Parse response
-    try:
-        quote = response.json()
-        return {
-            "total": quote["totalItems"],
-            "items": quote["items"]
-            # "symbol": quote["subject"]
-        }
-    except (KeyError, TypeError, ValueError):
-        return None
-
-
-def usd(value):
-    """Format value as USD."""
-    return f"${value:,.2f}"

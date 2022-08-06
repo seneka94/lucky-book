@@ -18,7 +18,7 @@
                             <select id="categories" name="categories">
                                 {% if session["user_id"] %}
                                 <option class="dropdown-item" value="all" {{ name["all"] }} >Усі книги</option>
-                                <option class="dropdown-item" value="my" {{ name["my"] }} >Мій список</option>
+                                <option class="dropdown-item" value="my" {{ name["my"] }} >Мій список ("Прочитати")</option>
                                 <option class="dropdown-item" value="top" {{ name["top"] }} >ТОП світової літератури</option>
                                 <option class="dropdown-item" value="uatop" {{ name["uatop"] }} >ТОП української літератури</option>
                                 <option class="dropdown-item" value="clas" {{ name["clas"] }} >Культова класика</option>
@@ -69,7 +69,7 @@
                   <div class="col-6">
                     <div class="p-6 text-start"><h3>{{ all[0]["title"] }}</h3>
                         <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ all[0]["author"] }}</a></h6>
-                        <h6 class="rating"> {{ all[0]["rating"]}} avg rating — {{ all[0]["ratings"]}} ratings</h6>
+                        <h6 class="rating"> rating {{ all[0]["rating"]}} </h6>
                         <form action="{{ all[0]["link"] }}" method="get" target="_blank">
                             <button type="submit" class="btn btn-outline-success" >більше на goodreads</button>
                         </form>
@@ -257,9 +257,10 @@
 
 
 
-        <footer style = "position:relative; top:200px;">
-            <h3>Footer</h3>
-            <p>Remember to check <a href="https://seneka94.github.io/trivia/">test</a></p>
+        <footer style = "position:relative; top:100px;">
+            Дані запозичені з сайтів: <a href="https://goodreads.com/">goodreads.com</a> |
+                <a href="https://books.google.com/">books.google.com</a> |
+                <a href="https://pen.org.ua/en/100-znakovyh-tvoriv-ukrayinskoyu-movoyu">pen.theukrainians.org</a>
         </footer>
 
 </main>

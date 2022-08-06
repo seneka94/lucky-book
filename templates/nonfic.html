@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<main class="container py-5 text-center">
+
+    <div class="p-2">
+        <h4 class="title">"Nonfiction"</h4>
+    </div>
+
+    <table class="table table-striped table-bordered">
+
+        <thead>
+            <tr>
+                <th class="text">Обкладинка</th>
+                <th class="text">Назва книги</th>
+                <th class="text">Автор</th>
+                <th class="text">Рейтинг</th>
+                <th class="text">Додати</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in table %}
+                <tr>
+                    <td class="text"><img  src="{{ row.image_sm }}"></td>
+                    <td class="text-start "><a class="link" href="{{ row.link }}"  title="Більше про книгу на goodreads" target="_blank" >{{ row.title }}</td>
+                    <td class="text-start"><a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ row.author }}</a></td>
+                    <td class="text font-weight-normal">{{ row.rating }}</td>
+                    <td>
+                        <form action="/add" method="post">
+                            <input name="id" type="hidden" value="{{ row.id }}">
+                            <input class="btn btn-outline-primary btn-sm" type="submit" value="в 'Прочитати'">
+                        </form>
+                        <p>
+                            <form action="/add" method="post">
+                                <input name="read" type="hidden" value="{{ row.id }}">
+                                <input class="btn btn-outline-success btn-sm" type="submit" value="в 'Прочитане'">
+                            </form>
+                        </p>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</main>
+{% endblock %}

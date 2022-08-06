@@ -7,16 +7,13 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required
 
 # Configure application
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-# Custom filter
-app.jinja_env.filters["usd"] = usd
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -44,11 +41,9 @@ def after_request(response):
 @app.route("/", methods=["GET", "POST"])
 #@login_required
 def index():
-    """Show portfolio of stocks"""
+
     name = { "all": "", "n": "", "top": "", "uatop": "", "clas": "", "ua": "", "uabio": "", "uanonfic": "", "nonfic": "", "bio": "", "hist": "", "fant": "", "tril": "", "scific": ""}
-
     if request.method == "POST":
-
         n = random.randint(1,4738)
         top = random.randint(1039,2538)
         uatop = random.randint(609,709)
@@ -75,7 +70,7 @@ def index():
                 db.execute("INSERT  INTO temp (title, author, num) VALUES (?, ?, ?)", row["title"], row["author"], count)
             mycount = db.execute("SELECT COUNT(id) FROM temp")
             if mycount[0]["COUNT(id)"] < 1:
-                apollogy = 'Додайте книги у "Мій список"!'
+                apollogy = 'Додайте книги у список "Прочитати"!'
                 return render_template("index.html", apollogy=apollogy, name=name)
             myrand = random.randint(1, mycount[0]["COUNT(id)"])
             sel = db.execute("SELECT * FROM temp WHERE num == ?", myrand)
@@ -117,14 +112,12 @@ def index():
         elif selected == 'scific':
             scific = db.execute("SELECT * FROM books WHERE id == ?", scific)
             return render_template("index.html", scific=scific, name=name)
-
         elif selected == 'all':
             all = db.execute("SELECT * FROM books WHERE id == ?", n)
             return render_template("index.html", all=all, name=name)
 
         return render_template("index.html", name=name)
     return render_template("index.html", name=name)
-
 
 
 @app.route("/add_book", methods=["GET", "POST"])
@@ -134,7 +127,9 @@ def add_book():
     name = { "MyList": "", "READ": ""}
 
     if request.method == "POST":
+
         addinlists = request.form.get("lists")
+
         title = request.form.get("title")
         author = request.form.get("author")
         other = request.form.get("other")
@@ -142,22 +137,13 @@ def add_book():
         name[addinlists] = "selected"
 
         if addinlists == "MyList":
-            db.execute("INSERT INTO my (userID, title, author, coments) VALUES(?, ?, ?, ?)", session["user_id"], title, author, other)
+            db.execute("INSERT INTO my (userID, title, author, coments, image_sm) VALUES(?, ?, ?, ?, ?)", session["user_id"], title, author, other, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png")
 
         if addinlists == "READ":
-            db.execute("INSERT INTO read (userID, title, author, notes) VALUES(?, ?, ?, ?)", session["user_id"], title, author, other)
+            db.execute("INSERT INTO read (userID, title, author, notes, image_sm) VALUES(?, ?, ?, ?, ?)", session["user_id"], title, author, other, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png")
         return render_template("add_book.html", name=name)
-
     else:
         return render_template("add_book.html", name=name)
-
-
-@app.route("/history")
-@login_required
-def history():
-    """Show history of transactions"""
-    table = db.execute("SELECT symbol, stock, price, number_of_shares, stat, data_time FROM portfolio WHERE usernameID == ? ORDER BY data_time DESC", session['user_id'])
-    return render_template("history.html", table=table)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -172,18 +158,18 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            return apology("потрібно ввести ім'я", 403)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            return apology("потрібно ввести пароль", 403)
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("invalid username and/or password", 403)
+            return apology("невірне ім'я і/або пароль", 403)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -207,33 +193,6 @@ def logout():
     return redirect("/")
 
 
-@app.route("/quote", methods=["GET", "POST"])
-@login_required
-def quote():
-    """Get stock quote."""
-    if request.method == "POST":
-        symbol = request.form.get("symbol")
-        inf = lookup(symbol)
-        list = []
-        for name in inf["items"]:
-            for i, j in name.items():
-                dict = {i:j}
-                list.append(dict)
-        list1=[]
-        for dict in list:
-            for i in dict:
-                if i == "volumeInfo":
-                    for j in i:
-                        list1.append(dict[i])
-                        #db.execute("INSERT INTO portfolio (usernameID, symbol, stat) VALUES(?, ?, ?)", session["user_id"], dict[i]["title"], dict[i]["industryIdentifiers"][0]["identifier"])
-
-        if inf != None:
-            return render_template("quoted.html",  inf = inf, list=list, list1=list1)
-        return apology("the stock does not exist", 403)
-    else:
-        return render_template("quote.html")
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -241,13 +200,12 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
-        #row = db.execute("SELECT username FROM users WHERE ? IN username", request.form.get("username"))
 
         if not username or db.execute("SELECT username FROM users WHERE username = ?", request.form.get("username")):
-            return apology("must provide username", 403)
+            return apology("ви не вели ім'я або користувач з таким іменем вже існує", 403)
 
         if not password or password != confirmation:
-            return apology("a password must be specified or the two passwords do not match", 403)
+            return apology("ви не ввели пароль або ввели невірний пароль", 403)
         hash = generate_password_hash(password, method="pbkdf2:sha256")
         table = db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, hash)
 
@@ -256,56 +214,9 @@ def register():
         return render_template("register.html")
 
 
-@app.route("/sell", methods=["GET", "POST"])
-@login_required
-def sell():
-    """Sell shares of stock"""
-    if request.method == "POST":
-        symbol = request.form.get("symbol")
-        shares = request.form.get("shares")
-        stock = lookup(symbol)
-        my = db.execute("SELECT symb FROM my WHERE userID = ?", session["user_id"])
-        sumShares = db.execute("SELECT shares FROM my WHERE userID = ? AND symb = ?", session["user_id"], symbol.upper())
-        if not symbol:
-            return apology("not symbol", 403)
-        i=0
-        for row in my:
-            if symbol.upper() == row["symb"]:
-                i+=1
-        if i <= 0:
-            return apology("you not have this stocks", 403)
-        if not shares.isnumeric() or int(shares) < 1:
-            return apology("proble with shares", 403)
-        if int(shares) > sumShares[0]["shares"]:
-            return apology("not have", 403)
-
-        # Check price
-        price = stock["price"]
-
-        balance = db.execute("SELECT cash FROM users WHERE id == ?", session["user_id"])
-        total_price = stock["price"] * int(shares)
-        portfolio = db.execute("INSERT INTO portfolio (usernameID, symbol, stock, price, number_of_shares, total_price, stat) VALUES(?, ?, ?, ?, ?, ?, ?)", session["user_id"],stock["symbol"], stock["name"], stock["price"], int(shares), total_price, "sell")
-
-        new_balance = balance[0]["cash"] + total_price
-        update = db.execute("UPDATE users SET cash == ? WHERE id == ?", new_balance, session["user_id"])
-        my_shares = db.execute("SELECT shares FROM my WHERE userID = ? AND symb = ?", session["user_id"], symbol.upper())
-        new_shares = int(my_shares[0]["shares"]) - int(shares)
-        db.execute("UPDATE my SET shares = ? WHERE userID = ? AND symb = ?", new_shares, session["user_id"], symbol.upper())
-
-        check = db.execute("SELECT shares FROM my WHERE userID = ? AND symb = ?", session["user_id"], symbol.upper())
-        if check[0]["shares"] == 0:
-            db.execute("DELETE FROM my WHERE userID = ? AND symb = ?", session["user_id"], symbol.upper())
-
-        return render_template("sell.html")
-    else:
-        return render_template("sell.html")
-
-
 @app.route("/my_list")
 @login_required
 def my_list():
-    """Show history of transactions"""
-
     my = db.execute("SELECT * FROM my WHERE userID == ?", session['user_id'])
     return render_template("my_list.html", my=my)
 
@@ -313,10 +224,85 @@ def my_list():
 @app.route("/top")
 @login_required
 def top():
-    """Show history of transactions"""
     table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 1039, 2538, 40)
     return render_template("top.html", table=table)
 
+
+@app.route("/uatop")
+@login_required
+def uatop():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?",  609, 709, 40)
+    return render_template("uatop.html", table=table)
+
+
+@app.route("/clas")
+@login_required
+def clas():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 4039, 4438, 40)
+    return render_template("clas.html", table=table)
+
+
+@app.route("/ua")
+@login_required
+def ua():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 1, 608, 40)
+    return render_template("ua.html", table=table)
+
+
+@app.route("/uabio")
+@login_required
+def uabio():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 710, 838, 40)
+    return render_template("uabio.html", table=table)
+
+
+@app.route("/uanonfic")
+@login_required
+def uanonfic():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 839, 1038, 40)
+    return render_template("uanonfic.html", table=table)
+
+
+@app.route("/nonfic")
+@login_required
+def nonfic():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 2539, 3038, 40)
+    return render_template("nonfic.html", table=table)
+
+
+@app.route("/bio")
+@login_required
+def bio():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 3039, 3438, 40)
+    return render_template("bio.html", table=table)
+
+
+@app.route("/hist")
+@login_required
+def hist():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?",  3439, 3638, 40)
+    return render_template("hist.html", table=table)
+
+
+@app.route("/fant")
+@login_required
+def fant():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 3639, 3838, 40)
+    return render_template("fant.html", table=table)
+
+
+@app.route("/tril")
+@login_required
+def tril():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 3839, 4038, 40)
+    return render_template("tril.html", table=table)
+
+
+@app.route("/scific")
+@login_required
+def scific():
+    table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 4439, 4738, 40)
+    return render_template("scific.html", table=table)
 
 @app.route("/add", methods=["POST"])
 def add():
@@ -330,21 +316,69 @@ def add():
     InRead = db.execute("SELECT * FROM books WHERE id == ?", inread)
 
     if id:
-        db.execute("INSERT INTO my (userID, title, author, coments) VALUES(?, ?, ?, ?)", session['user_id'], book[0]["title"], book[0]["author"], "-")
-        return redirect("/top")
+        db.execute("INSERT INTO my (userID, title, author, coments, image_sm) VALUES(?, ?, ?, ?, ?)", session['user_id'], book[0]["title"], book[0]["author"], "-", book[0]["image_sm"])
+        if 1039 <= int(id) and int(id) <= 2538:
+            return redirect("/top")
+        if 609 <= int(id) and int(id) <= 709:
+            return redirect("/uatop")
+        if 4039 <= int(id) and int(id) <= 4438:
+            return redirect("/klas")
+        if 1 <= int(id) and int(id) <= 608:
+            return redirect("/ua")
+        if  710 <= int(id) and int(id) <= 838:
+            return redirect("/uabio")
+        if  839 <= int(id) and int(id) <= 1038:
+            return redirect("/uanonfic")
+        if  2539 <= int(id) and int(id) <= 3038:
+            return redirect("/nonfic")
+        if 3039 <= int(id) and int(id) <= 3438:
+            return redirect("/bio")
+        if 3439 <= int(id) and int(id) <= 3638:
+            return redirect("/hist")
+        if 3639 <= int(id) and int(id) <= 3838:
+            return redirect("/fant")
+        if 3839 <= int(id) and int(id) <= 4038:
+            return redirect("/tril")
+        if 4439 <= int(id) and int(id) <= 4738:
+            return redirect("/scific")
+
+    elif inread:
+        db.execute("INSERT INTO read (userID, title, author, notes, image_sm) VALUES(?, ?, ?, ?, ?)", session['user_id'], InRead[0]["title"], InRead[0]["author"], "-", InRead[0]["image_sm"])
+        if 1039 <= int(inread) and int(inread) <= 2538:
+            return redirect("/top")
+        if 609 <= int(inread) and int(inread) <= 709:
+            return redirect("/uatop")
+        if 4039 <= int(inread) and int(inread) <= 4438:
+            return redirect("/klas")
+        if 1 <= int(inread) and int(inread) <= 608:
+            return redirect("/ua")
+        if  710 <= int(inread) and int(inread) <= 838:
+            return redirect("/uabio")
+        if  839 <= int(inread) and int(inread) <= 1038:
+            return redirect("/uanonfic")
+        if  2539 <= int(inread) and int(inread) <= 3038:
+            return redirect("/nonfic")
+        if 3039 <= int(inread) and int(inread) <= 3438:
+            return redirect("/bio")
+        if 3439 <= int(inread) and int(inread) <= 3638:
+            return redirect("/hist")
+        if 3639 <= int(inread) and int(inread) <= 3838:
+            return redirect("/fant")
+        if 3839 <= int(inread) and int(inread) <= 4038:
+            return redirect("/tril")
+        if 4439 <= int(inread) and int(inread) <= 4738:
+            return redirect("/scific")
+
     elif addID:
-        db.execute("INSERT INTO read (userID, title, author) VALUES(?, ?, ?)", session['user_id'], read[0]["title"], read[0]["author"])
+        db.execute("INSERT INTO read (userID, title, author, notes, image_sm) VALUES(?, ?, ?, ?, ?)", session['user_id'], read[0]["title"], read[0]["author"], "-", read[0]["image_sm"])
         db.execute("DELETE FROM my WHERE orderID = ?", addID)
         return redirect("/my_list")
-    elif inread:
-        db.execute("INSERT INTO read (userID, title, author) VALUES(?, ?, ?)", session['user_id'], InRead[0]["title"], InRead[0]["author"])
-        return redirect("/top")
-    return redirect("/top")
+
+    return redirect("/")
 
 
 @app.route("/delete", methods=["POST"])
 def delete():
-
     delete = request.form.get("delete")
     dell = request.form.get("dell")
     if delete:
@@ -359,6 +393,5 @@ def delete():
 @app.route("/read")
 @login_required
 def read():
-
     table = db.execute("SELECT * FROM read WHERE userID == ?", session['user_id'])
     return render_template("read.html", table=table)
