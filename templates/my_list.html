@@ -33,10 +33,12 @@
                         <input name="addID" type="hidden" value="{{ row.orderID }}">
                         <input class="btn btn-outline-success btn-sm" type="submit" value="в 'Прочитане'">
                     </form>
-                    <p><form action="/delete" method="post">
-                        <input name="delete" type="hidden" value="{{ row.orderID }}">
-                        <input class="btn btn-outline-danger btn-sm" type="submit" value="    Видалити   ">
-                    </form></p>
+                    <p>
+                        <form action="/delete" method="post">
+                            <input name="delete" type="hidden" value="{{ row.orderID }}">
+                            <input class="btn btn-outline-danger btn-sm" type="submit" value="    Видалити   ">
+                        </form>
+                    </p>
                 </td>
             </tr>
             {% endfor %}

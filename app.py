@@ -43,9 +43,10 @@ def after_request(response):
 def index():
 
     name = { "all": "", "n": "", "top": "", "uatop": "", "clas": "", "ua": "", "uabio": "", "uanonfic": "", "nonfic": "", "bio": "", "hist": "", "fant": "", "tril": "", "scific": ""}
+
     if request.method == "POST":
 
-        """all"""
+        """range for random for each genre"""
         n = random.randint(1,4738)
         top = random.randint(1039,2538)
         uatop = random.randint(609,709)
@@ -60,9 +61,11 @@ def index():
         tril = random.randint(3839,4038)
         scific = random.randint(4439,4738)
 
+        """remember the selected genre"""
         selected = request.form.get("categories")
         name[selected] = "selected"
 
+        """show a random book depending on the genre"""
         if selected == 'my':
             delete = db.execute("DELETE FROM temp")
             my = db.execute("SELECT * FROM my WHERE userID == ?", session["user_id"])
@@ -77,7 +80,6 @@ def index():
             myrand = random.randint(1, mycount[0]["COUNT(id)"])
             sel = db.execute("SELECT * FROM temp WHERE num == ?", myrand)
             return render_template("index.html", sel=sel, name=name)
-
         elif selected == 'top':
             top = db.execute("SELECT * FROM books WHERE id == ?", top)
             return render_template("index.html", top=top, name=name)
@@ -125,11 +127,10 @@ def index():
 @app.route("/add_book", methods=["GET", "POST"])
 @login_required
 def add_book():
+    """add books of the duly filled forms in the 'add book' section"""
 
     name = { "MyList": "", "READ": ""}
-
     if request.method == "POST":
-
         addinlists = request.form.get("lists")
 
         title = request.form.get("title")
@@ -140,7 +141,6 @@ def add_book():
 
         if addinlists == "MyList":
             db.execute("INSERT INTO my (userID, title, author, coments, image_sm, image) VALUES(?, ?, ?, ?, ?, ?)", session["user_id"], title, author, other, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png", "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX175_.png")
-
         if addinlists == "READ":
             db.execute("INSERT INTO read (userID, title, author, notes, image_sm, image) VALUES(?, ?, ?, ?, ?, ?)", session["user_id"], title, author, other, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png", "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX175_.png")
         return render_template("add_book.html", name=name)
@@ -205,12 +205,10 @@ def register():
 
         if not username or db.execute("SELECT username FROM users WHERE username = ?", request.form.get("username")):
             return apology("ви не вели ім'я або користувач з таким іменем вже існує", 403)
-
         if not password or password != confirmation:
             return apology("ви не ввели пароль або ввели невірний пароль", 403)
         hash = generate_password_hash(password, method="pbkdf2:sha256")
         table = db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, hash)
-
         return render_template("login.html")
     else:
         return render_template("register.html")
@@ -221,6 +219,13 @@ def register():
 def my_list():
     my = db.execute("SELECT * FROM my WHERE userID == ?", session['user_id'])
     return render_template("my_list.html", my=my)
+
+
+@app.route("/read")
+@login_required
+def read():
+    table = db.execute("SELECT * FROM read WHERE userID == ?", session['user_id'])
+    return render_template("read.html", table=table)
 
 
 @app.route("/top")
@@ -306,8 +311,10 @@ def scific():
     table = db.execute("SELECT * FROM books WHERE id BETWEEN ? AND ? AND LENGTH(title) < ?", 4439, 4738, 40)
     return render_template("scific.html", table=table)
 
+
 @app.route("/add", methods=["POST"])
 def add():
+    """add books in my lists from other lists"""
 
     id = request.form.get("id")
     addID = request.form.get("addID")
@@ -370,7 +377,7 @@ def add():
             return redirect("/tril")
         if 4439 <= int(inread) and int(inread) <= 4738:
             return redirect("/scific")
-
+            
     elif addID:
         db.execute("INSERT INTO read (userID, title, author, notes, image_sm, image) VALUES(?, ?, ?, ?, ?, ?)", session['user_id'], read[0]["title"], read[0]["author"], "-", read[0]["image_sm"], read[0]["image"])
         db.execute("DELETE FROM my WHERE orderID = ?", addID)
@@ -381,6 +388,8 @@ def add():
 
 @app.route("/delete", methods=["POST"])
 def delete():
+    """delete books from my lists"""
+
     delete = request.form.get("delete")
     dell = request.form.get("dell")
     if delete:
@@ -392,11 +401,7 @@ def delete():
     return redirect("/")
 
 
-@app.route("/read")
-@login_required
-def read():
-    table = db.execute("SELECT * FROM read WHERE userID == ?", session['user_id'])
-    return render_template("read.html", table=table)
+
 
 
 
