@@ -70,197 +70,245 @@
                     <div class="p-6 text-start"><h3>{{ all[0]["title"] }}</h3>
                         <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ all[0]["author"] }}</a></h6>
                         <h6 class="rating"> rating {{ all[0]["rating"]}} </h6>
-                        <form action="{{ all[0]["link"] }}" method="get" target="_blank">
-                            <button type="submit" class="btn btn-outline-success" >більше на goodreads</button>
-                        </form>
 
+                        <form action="{{ all[0]["link"] }}" method="get" target="_blank">
+                            <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
+                        </form>
                     </td></div>
                   </div>
                 </div>
                 {% endfor %}
-                <h3 style="color: red">{{ apollogy }}</h3>
-            </div>
-
-                    <div class="p-3">
 
 
-
-
-
-
-
-                        {% for row in sel %}
-                            <h3>{{ sel[0]["title"] }}</h3>
-                            <h5>{{ sel[0]["author"] }}</h5>
-                            <h6></h6>
+                {% for row in sel %}
+                <div class="col-6">
+                    <div class="p-6  text-end"><img src="{{ sel[0]["image"] }}"></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="p-6 text-start"><h3>{{ sel[0]["title"] }}</h3>
+                        <h6 class="author"> by {{ sel[0]["author"] }}</h6>
+                    </td></div>
+                  </div>
+                </div>
                         {% endfor %}
+
+
 
                         {% for row in top %}
-                            <p class="text-start"><img  src="{{ top[0]["image"] }}"></p>
-                            <h3 class="text-start">{{ top[0]["title"] }}</h3>
-                            <h5 class="text-start">{{ top[0]["author"] }}</h5>
-                            <h6 class="text-start">{{ top[0]["rating"] }}</h6>
-                            <h6 class="text-start"> <form action="{{ top[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
-                            </form> </h6>
-                            <h6 class="text-start"><form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form></h6>
-                        {% endfor %}
+                        <div class="col-6">
+                            <div class="p-6  text-end"><img  src="{{ top[0]["image"] }}"></div>
+                          </div>
+                          <div class="col-6">
+                            <div class="p-6 text-start"><h3>{{ top[0]["title"] }}</h3>
+                                <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ top[0]["author"] }}</a></h6>
+                                <h6 class="rating"> rating {{ top[0]["rating"]}} </h6>
 
-                        {% for row in uatop %}
-                            <img  src="{{ uatop[0]["image"] }}">
-                            <h3>{{ uatop[0]["title"] }}</h3>
-                            <h5>{{ uatop[0]["author"] }}</h5>
-                            <h6>{{ uatop[0]["rating"] }}</h6>
+                                <form action="{{ top[0]["link"] }}" method="get" target="_blank">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
+                                </form>
+                            </td></div>
+                          </div>
+                        </div>
+                    {% endfor %}
+
+                    {% for row in uatop %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ uatop[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{ uatop[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ uatop[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{ uatop[0]["rating"]}} </h6>
+
                             <form action="{{ uatop[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in clas %}
-                            <img  src="{{ clas[0]["image"] }}">
-                            <h3>{{ clas[0]["title"] }}</h3>
-                            <h5>{{ clas[0]["author"] }}</h5>
-                            <h6>{{ clas[0]["rating"] }}</h6>
+                    {% for row in clas %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ clas[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{ clas[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ clas[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{ clas[0]["rating"]}} </h6>
+
                             <form action="{{ clas[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in ua %}
-                            <img  src="{{ ua[0]["image"] }}">
-                            <h3>{{ ua[0]["title"] }}</h3>
-                            <h5>{{ ua[0]["author"] }}</h5>
-                            <h6>{{ ua[0]["rating"] }}</h6>
+                    {% for row in ua %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ ua[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{ ua[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ ua[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{ ua[0]["rating"]}} </h6>
+
                             <form action="{{ ua[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in uabio %}
-                            <img  src="{{ uabio[0]["image"] }}">
-                            <h3>{{ uabio[0]["title"] }}</h3>
-                            <h5>{{ uabio[0]["author"] }}</h5>
-                            <h6>{{ uabio[0]["rating"] }}</h6>
+                    {% for row in uabio %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ uabio[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{ uabio[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ uabio[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{ uabio[0]["rating"]}} </h6>
+
                             <form action="{{ uabio[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in uanonfic %}
-                            <img  src="{{ uanonfic[0]["image"] }}">
-                            <h3>{{ uanonfic[0]["title"] }}</h3>
-                            <h5>{{ uanonfic[0]["author"] }}</h5>
-                            <h6>{{ uanonfic[0]["rating"] }}</h6>
+                    {% for row in uanonfic %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ uanonfic[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{uanonfic[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ uanonfic[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{ uanonfic[0]["rating"]}} </h6>
+
                             <form action="{{ uanonfic[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in nonfic %}
-                            <img  src="{{ nonfic[0]["image"] }}">
-                            <h3>{{ nonfic[0]["title"] }}</h3>
-                            <h5>{{ nonfic[0]["author"] }}</h5>
-                            <h6>{{ nonfic[0]["rating"] }}</h6>
+                    {% for row in nonfic %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ nonfic[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{nonfic[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ nonfic[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{ nonfic[0]["rating"]}} </h6>
+
                             <form action="{{ nonfic[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in bio %}
-                            <img  src="{{ bio[0]["image"] }}">
-                            <h3>{{ bio[0]["title"] }}</h3>
-                            <h5>{{ bio[0]["author"] }}</h5>
-                            <h6>{{ bio[0]["rating"] }}</h6>
+                    {% for row in bio %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ bio[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{bio[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ bio[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{ bio[0]["rating"]}} </h6>
+
                             <form action="{{ bio[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in hist %}
-                            <img  src="{{ hist[0]["image"] }}">
-                            <h3>{{ hist[0]["title"] }}</h3>
-                            <h5>{{ hist[0]["author"] }}</h5>
-                            <h6>{{ hist[0]["rating"] }}</h6>
+                    {% for row in hist %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ hist[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{hist[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ hist[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{ hist[0]["rating"]}} </h6>
+
                             <form action="{{ hist[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in fant %}
-                            <img  src="{{ fant[0]["image"] }}">
-                            <h3>{{ fant[0]["title"] }}</h3>
-                            <h5>{{ fant[0]["author"] }}</h5>
-                            <h6>{{ fant[0]["rating"] }}</h6>
+                    {% for row in fant %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ fant[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{fant[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ fant[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{fant[0]["rating"]}} </h6>
+
                             <form action="{{ fant[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in tril %}
-                            <img  src="{{ tril[0]["image"] }}">
-                            <h3>{{ tril[0]["title"] }}</h3>
-                            <h5>{{ tril[0]["author"] }}</h5>
-                            <h6>{{ tril[0]["rating"] }}</h6>
+                    {% for row in tril %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ tril[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{tril[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ tril[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{tril[0]["rating"]}} </h6>
+
                             <form action="{{ tril[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for row in scific %}
-                            <img  src="{{ scific[0]["image"] }}">
-                            <h3>{{ scific[0]["title"] }}</h3>
-                            <h5>{{ scific[0]["author"] }}</h5>
-                            <h6>{{ scific[0]["rating"] }}</h6>
+                    {% for row in scific %}
+                    <div class="col-6">
+                        <div class="p-6  text-end"><img  src="{{ scific[0]["image"] }}"></div>
+                      </div>
+                      <div class="col-6">
+                        <div class="p-6 text-start"><h3>{{scific[0]["title"] }}</h3>
+                            <h6 class="author"> by <a href="{{ row.AuthorLink }}" class="link" title="Більше про автора на goodreads" target="_blank" >{{ scific[0]["author"] }}</a></h6>
+                            <h6 class="rating"> rating {{scific[0]["rating"]}} </h6>
+
                             <form action="{{ scific[0]["link"] }}" method="get" target="_blank">
-                                <button type="submit" class="btn btn-danger btn-sm">більше про книгу на goodreads</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm bg-gradient" >більше на goodreads</button>
                             </form>
-                            <form  method="get">
-                                <p><button id="ua" name="ua" value="delete" class="btn btn-ligth btn-sm">не пропонувати</button></p>
-                            </form>
-                        {% endfor %}
+                        </td></div>
+                      </div>
+                    </div>
+                    {% endfor %}
+
+                <h3 style="color: red">{{ apollogy }}</h3>
+                <h3 style="color: green">{{ ok }}</h3>
+                <h3 style="color: green">{{ ok1 }}</h3>
+            </div>
 
 
-
-
-
-
-
-        <footer style = "position:relative; top:100px;">
+        <footer  style = "position:relative; top:100px; font-size: 70%;">
             Дані запозичені з сайтів: <a href="https://goodreads.com/">goodreads.com</a> |
                 <a href="https://books.google.com/">books.google.com</a> |
                 <a href="https://pen.org.ua/en/100-znakovyh-tvoriv-ukrayinskoyu-movoyu">pen.theukrainians.org</a>
+
         </footer>
 
 </main>

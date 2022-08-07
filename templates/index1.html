@@ -276,3 +276,27 @@
 
 </main>
 {% endblock %}
+
+
+
+
+
+@app.route("/ADD", methods=["POST"])
+def ADD():
+
+    id = request.form.get("id")
+    inread = request.form.get("read")
+
+    book = db.execute("SELECT * FROM books WHERE id == ?", id)
+    InRead = db.execute("SELECT * FROM books WHERE id == ?", inread)
+
+    if id:
+        db.execute("INSERT INTO my (userID, title, author, coments, image_sm) VALUES(?, ?, ?, ?, ?)", session['user_id'], book[0]["title"], book[0]["author"], "-", book[0]["image_sm"])
+        ok = 'Книга додана у список "Прочитати"!'
+        return redirect("/")
+
+    elif inread:
+        db.execute("INSERT INTO read (userID, title, author, notes, image_sm) VALUES(?, ?, ?, ?, ?)", session['user_id'], InRead[0]["title"], InRead[0]["author"], "-", InRead[0]["image_sm"])
+        ok1 = 'Книга додана у список "Прочитане"!'
+        return redirect("/")
+    return redirect("/")

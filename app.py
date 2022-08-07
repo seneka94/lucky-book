@@ -67,7 +67,7 @@ def index():
             count = 0
             for row in my:
                 count +=1
-                db.execute("INSERT  INTO temp (title, author, num) VALUES (?, ?, ?)", row["title"], row["author"], count)
+                db.execute("INSERT  INTO temp (title, author, image, link, AuthorLink, num) VALUES (?, ?, ?, ?, ?, ?)", row["title"], row["author"], row["image"], row["link"], row["AuthorLink"], count)
             mycount = db.execute("SELECT COUNT(id) FROM temp")
             if mycount[0]["COUNT(id)"] < 1:
                 apollogy = 'Додайте книги у список "Прочитати"!'
@@ -137,10 +137,10 @@ def add_book():
         name[addinlists] = "selected"
 
         if addinlists == "MyList":
-            db.execute("INSERT INTO my (userID, title, author, coments, image_sm) VALUES(?, ?, ?, ?, ?)", session["user_id"], title, author, other, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png")
+            db.execute("INSERT INTO my (userID, title, author, coments, image_sm, image) VALUES(?, ?, ?, ?, ?, ?)", session["user_id"], title, author, other, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png", "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX175_.png")
 
         if addinlists == "READ":
-            db.execute("INSERT INTO read (userID, title, author, notes, image_sm) VALUES(?, ?, ?, ?, ?)", session["user_id"], title, author, other, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png")
+            db.execute("INSERT INTO read (userID, title, author, notes, image_sm, image) VALUES(?, ?, ?, ?, ?, ?)", session["user_id"], title, author, other, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX50_.png", "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/book/111x148._SX175_.png")
         return render_template("add_book.html", name=name)
     else:
         return render_template("add_book.html", name=name)
@@ -316,7 +316,7 @@ def add():
     InRead = db.execute("SELECT * FROM books WHERE id == ?", inread)
 
     if id:
-        db.execute("INSERT INTO my (userID, title, author, coments, image_sm) VALUES(?, ?, ?, ?, ?)", session['user_id'], book[0]["title"], book[0]["author"], "-", book[0]["image_sm"])
+        db.execute("INSERT INTO my (userID, title, author, coments, image_sm, image) VALUES(?, ?, ?, ?, ?, ?)", session['user_id'], book[0]["title"], book[0]["author"], "-", book[0]["image_sm"],  book[0]["image"])
         if 1039 <= int(id) and int(id) <= 2538:
             return redirect("/top")
         if 609 <= int(id) and int(id) <= 709:
@@ -343,7 +343,7 @@ def add():
             return redirect("/scific")
 
     elif inread:
-        db.execute("INSERT INTO read (userID, title, author, notes, image_sm) VALUES(?, ?, ?, ?, ?)", session['user_id'], InRead[0]["title"], InRead[0]["author"], "-", InRead[0]["image_sm"])
+        db.execute("INSERT INTO read (userID, title, author, notes, image_sm, image) VALUES(?, ?, ?, ?, ?, ?)", session['user_id'], InRead[0]["title"], InRead[0]["author"], "-", InRead[0]["image_sm"], InRead[0]["image"])
         if 1039 <= int(inread) and int(inread) <= 2538:
             return redirect("/top")
         if 609 <= int(inread) and int(inread) <= 709:
@@ -370,11 +370,14 @@ def add():
             return redirect("/scific")
 
     elif addID:
-        db.execute("INSERT INTO read (userID, title, author, notes, image_sm) VALUES(?, ?, ?, ?, ?)", session['user_id'], read[0]["title"], read[0]["author"], "-", read[0]["image_sm"])
+        db.execute("INSERT INTO read (userID, title, author, notes, image_sm, image) VALUES(?, ?, ?, ?, ?, ?)", session['user_id'], read[0]["title"], read[0]["author"], "-", read[0]["image_sm"], read[0]["image"])
         db.execute("DELETE FROM my WHERE orderID = ?", addID)
         return redirect("/my_list")
 
     return redirect("/")
+
+
+
 
 
 @app.route("/delete", methods=["POST"])
@@ -395,3 +398,12 @@ def delete():
 def read():
     table = db.execute("SELECT * FROM read WHERE userID == ?", session['user_id'])
     return render_template("read.html", table=table)
+
+
+
+
+
+
+
+
+
