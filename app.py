@@ -44,6 +44,8 @@ def index():
 
     name = { "all": "", "n": "", "top": "", "uatop": "", "clas": "", "ua": "", "uabio": "", "uanonfic": "", "nonfic": "", "bio": "", "hist": "", "fant": "", "tril": "", "scific": ""}
     if request.method == "POST":
+
+        """all"""
         n = random.randint(1,4738)
         top = random.randint(1039,2538)
         uatop = random.randint(609,709)
@@ -375,9 +377,6 @@ def add():
         return redirect("/my_list")
 
     return redirect("/")
-
-
-
 
 
 @app.route("/delete", methods=["POST"])
